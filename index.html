@@ -52,7 +52,6 @@ body{
   padding: 14px 14px;
 }
 
-/* remove the big title from the very top (brand block removed) */
 .topStack{
   display:flex;
   flex-direction:column;
@@ -75,30 +74,21 @@ body{
   display:inline-flex;
   align-items:center;
   gap:6px;
-  padding:7px 12px;              /* smaller */
+  padding:7px 12px;
   border-radius: 999px;
   border: 1px solid rgba(0,0,0,.12);
-  background: linear-gradient(
-    135deg,
-    rgba(255,245,210,.85),
-    rgba(255,255,255,.75)
-  );
+  background: linear-gradient(135deg, rgba(255,245,210,.85), rgba(255,255,255,.75));
   color:#1a1a1a;
   text-decoration:none;
   font-weight:900;
-  font-size: 12.5px;             /* smaller text */
+  font-size: 12.5px;
   letter-spacing:.2px;
   white-space:nowrap;
-
-  box-shadow:
-    0 6px 14px rgba(0,0,0,.12),
-    inset 0 1px 0 rgba(255,255,255,.85);
-
+  box-shadow: 0 6px 14px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.85);
   position:relative;
   overflow:hidden;
   transform: translateZ(0);
 }
-
 .aLink:before{
   content:"";
   position:absolute;
@@ -111,33 +101,20 @@ body{
   filter: blur(.6px);
   pointer-events:none;
 }
-
-  
-.aLink:before{
-  content:"";
-  position:absolute; inset:-60px;
-  background:
-    radial-gradient(200px 140px at 35% 35%, rgba(255,255,255,.80), rgba(255,255,255,0) 65%),
-    radial-gradient(220px 160px at 70% 60%, rgba(255,220,120,.65), rgba(255,255,255,0) 70%);
-  opacity:.35;
-  filter: blur(1px);
-  pointer-events:none;
-}
-
-.aLink:hover{ transform: translateY(-1px); background: rgba(255,255,255,.78); }
-.aLink:active{ transform: translateY(0px); }
+.aLink:hover{ transform: translateY(-1px) scale(1.03); background: rgba(255,255,255,.78); }
+.aLink:active{ transform: translateY(0px) scale(.98); }
 
 @keyframes glowPulseA{
-  0%,100%{ box-shadow: 0 10px 24px rgba(0,0,0,.10), 0 0 0 rgba(255,214,120,0); }
-  50%{ box-shadow: 0 16px 34px rgba(0,0,0,.14), 0 0 26px rgba(255,214,120,.85); }
+  0%,100%{ box-shadow: 0 6px 14px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.85), 0 0 0 rgba(255,214,120,0); }
+  50%{ box-shadow: 0 10px 22px rgba(0,0,0,.14), inset 0 1px 0 rgba(255,255,255,.85), 0 0 22px rgba(255,214,120,.85); }
 }
 @keyframes glowPulseB{
-  0%,100%{ box-shadow: 0 10px 24px rgba(0,0,0,.10), 0 0 0 rgba(94,230,255,0); }
-  50%{ box-shadow: 0 16px 34px rgba(0,0,0,.14), 0 0 26px rgba(94,230,255,.78); }
+  0%,100%{ box-shadow: 0 6px 14px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.85), 0 0 0 rgba(94,230,255,0); }
+  50%{ box-shadow: 0 10px 22px rgba(0,0,0,.14), inset 0 1px 0 rgba(255,255,255,.85), 0 0 22px rgba(94,230,255,.78); }
 }
 @keyframes glowPulseC{
-  0%,100%{ box-shadow: 0 10px 24px rgba(0,0,0,.10), 0 0 0 rgba(255,126,185,0); }
-  50%{ box-shadow: 0 16px 34px rgba(0,0,0,.14), 0 0 26px rgba(255,126,185,.72); }
+  0%,100%{ box-shadow: 0 6px 14px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.85), 0 0 0 rgba(255,126,185,0); }
+  50%{ box-shadow: 0 10px 22px rgba(0,0,0,.14), inset 0 1px 0 rgba(255,255,255,.85), 0 0 22px rgba(255,126,185,.72); }
 }
 .aLink.g1{ animation: glowPulseA 3.2s ease-in-out infinite; animation-delay: .0s; }
 .aLink.g2{ animation: glowPulseB 3.2s ease-in-out infinite; animation-delay: 1.05s; }
@@ -151,7 +128,6 @@ body{
   justify-content:center;
   width:100%;
 }
-
 .langBtn{
   border:1px solid var(--line);
   background: rgba(255,255,255,.62);
@@ -187,7 +163,6 @@ body{
   overflow:hidden;
   text-align:center;
 }
-
 .hero:before{
   content:"";
   position:absolute; inset:-40px;
@@ -199,7 +174,6 @@ body{
   opacity:.55;
   pointer-events:none;
 }
-
 .heroInner{position:relative}
 .hero h1{
   margin:0 0 10px;
@@ -229,7 +203,6 @@ body{
   -webkit-backdrop-filter: blur(10px);
   overflow:hidden;
 }
-
 .item{ border-top: 1px solid var(--line); }
 .item:first-child{ border-top:none; }
 
@@ -248,31 +221,45 @@ body{
   overflow:hidden;
 }
 
+/* base soft aura */
 .btn:before{
   content:"";
   position:absolute;
   inset:-60px;
   opacity:0;
   background:
-    radial-gradient(240px 180px at 30% 50%, rgba(255,220,120,.75), rgba(255,255,255,0) 68%),
-    radial-gradient(260px 200px at 75% 40%, rgba(160,235,255,.60), rgba(255,255,255,0) 72%),
-    radial-gradient(260px 200px at 55% 80%, rgba(255,170,210,.55), rgba(255,255,255,0) 72%);
+    radial-gradient(220px 160px at 30% 50%, rgba(255,220,120,.55), rgba(255,255,255,0) 70%),
+    radial-gradient(240px 180px at 75% 40%, rgba(160,235,255,.45), rgba(255,255,255,0) 74%),
+    radial-gradient(240px 180px at 55% 80%, rgba(255,170,210,.40), rgba(255,255,255,0) 74%);
   filter: blur(1px);
   pointer-events:none;
   transition: opacity .2s ease;
 }
 
-/* sparkle when opened */
-@keyframes tabSparkle{
-  0%{ opacity:0; transform: translateY(8px) scale(1.02); }
-  30%{ opacity:.9; }
-  100%{ opacity:0; transform: translateY(-10px) scale(1.06); }
+/* sparkle burst container (small rainbow sparkles) */
+.sparkBurst{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+}
+.sparkDot{
+  position:absolute;
+  width:6px;
+  height:6px;
+  border-radius:999px;
+  opacity:0;
+  filter: blur(.1px);
+  will-change: transform, opacity;
+}
+@keyframes sparkPop{
+  0%{ opacity:0; transform: translate3d(0,10px,0) scale(.6); }
+  30%{ opacity:.95; }
+  100%{ opacity:0; transform: translate3d(0,-18px,0) scale(.2); }
 }
 
-.item.open .btn:before{
-  opacity:.85;
-  animation: tabSparkle 650ms ease-out 1;
-}
+/* sparkle when opened */
+.item.open .btn:before{ opacity:.85; }
 
 .btn .label{
   display:flex;
@@ -281,7 +268,6 @@ body{
   position:relative;
   z-index:1;
 }
-
 .btn .label .t{
   font-family:"Cinzel", serif;
   font-weight: 900;
@@ -336,7 +322,6 @@ body{
   color: #121212;
   box-shadow: 0 12px 26px rgba(0,0,0,.10);
 }
-
 .text .lead{
   font-weight: 950;
   font-family:"Cinzel", serif;
@@ -346,7 +331,6 @@ body{
   font-family:"Noto Sans JP", system-ui, sans-serif;
   letter-spacing:.2px;
 }
-
 .smallNote{
   margin-top:12px;
   font-size: 12.5px;
@@ -354,21 +338,22 @@ body{
   color: #222;
   opacity:.9;
 }
-
 .hidden{display:none !important}
 
 /* ===== Footer ===== */
 .footer{
   margin-top: 18px;
   text-align:center;
-  font-size: 12.5px;
+  font-family:"Cinzel", serif;
+  font-size: 14.5px;
   font-weight: 900;
-  color: rgba(0,0,0,.78);
+  letter-spacing:.35px;
+  color: rgba(0,0,0,.85);
   padding: 18px 10px 0;
-  text-shadow: 0 2px 0 rgba(255,255,255,.65);
+  text-shadow: 0 1px 0 rgba(255,255,255,.55); /* less glow */
 }
 
-/* ===== BoohaYellow Ghost Flyby ===== */
+/* ===== BoohaYellow Ghost Flyby + glitter trail ===== */
 .ghost{
   position: fixed;
   left: -160px;
@@ -382,15 +367,16 @@ body{
   will-change: transform, opacity;
 }
 
+/* small sparkly glitter behind ghost */
 .trail{
   position: fixed;
-  width: 10px;
-  height: 10px;
+  width: 7px;
+  height: 7px;
   border-radius: 999px;
   pointer-events:none;
   z-index: 49;
   opacity: .95;
-  filter: blur(.2px);
+  filter: blur(.15px);
   will-change: transform, opacity;
 }
 
@@ -399,7 +385,6 @@ body{
   70%  { opacity:.55; transform: scale(.85); }
   100% { opacity:0;   transform: scale(.25); }
 }
-
 
 @media (prefers-reduced-motion: reduce){
   .aLink{ animation: none !important; }
@@ -442,6 +427,7 @@ body{
   <section class="accordion en hidden" id="accEN" aria-label="Accordion English">
     <div class="item open">
       <button class="btn" type="button" aria-expanded="true">
+        <div class="sparkBurst" aria-hidden="true"></div>
         <div class="label">
           <div class="t">Welcome to the Booha Adventure</div>
           <div class="s">What this world is, and why I built it</div>
@@ -463,6 +449,7 @@ body{
 
     <div class="item">
       <button class="btn" type="button" aria-expanded="false">
+        <div class="sparkBurst" aria-hidden="true"></div>
         <div class="label">
           <div class="t">Booha Study Decks</div>
           <div class="s">Full-audio cards that build your weekly foundation</div>
@@ -482,6 +469,7 @@ body{
 
     <div class="item">
       <button class="btn" type="button" aria-expanded="false">
+        <div class="sparkBurst" aria-hidden="true"></div>
         <div class="label">
           <div class="t">Booha Adventure Game Decks</div>
           <div class="s">Weekly games that turn study into action</div>
@@ -501,6 +489,7 @@ body{
 
     <div class="item">
       <button class="btn" type="button" aria-expanded="false">
+        <div class="sparkBurst" aria-hidden="true"></div>
         <div class="label">
           <div class="t">Monthly Review Decks and Maze Markers</div>
           <div class="s">No-audio checks that prove what stayed in your memory</div>
@@ -521,6 +510,7 @@ body{
 
     <div class="item">
       <button class="btn" type="button" aria-expanded="false">
+        <div class="sparkBurst" aria-hidden="true"></div>
         <div class="label">
           <div class="t">Updates and Notes</div>
           <div class="s">What changed, what was fixed, and what’s new</div>
@@ -541,6 +531,7 @@ body{
   <section class="accordion jp" id="accJP" aria-label="Accordion Japanese">
     <div class="item open">
       <button class="btn" type="button" aria-expanded="true">
+        <div class="sparkBurst" aria-hidden="true"></div>
         <div class="label">
           <div class="t">ブーハー・アドベンチャーへようこそ</div>
           <div class="s">この世界は何か、なぜ作ったのか</div>
@@ -562,6 +553,7 @@ body{
 
     <div class="item">
       <button class="btn" type="button" aria-expanded="false">
+        <div class="sparkBurst" aria-hidden="true"></div>
         <div class="label">
           <div class="t">学習デッキ</div>
           <div class="s">毎週の土台。すべてフル音声</div>
@@ -581,6 +573,7 @@ body{
 
     <div class="item">
       <button class="btn" type="button" aria-expanded="false">
+        <div class="sparkBurst" aria-hidden="true"></div>
         <div class="label">
           <div class="t">アドベンチャーゲームデッキ</div>
           <div class="s">学習した英語を動かす週のゲーム</div>
@@ -600,6 +593,7 @@ body{
 
     <div class="item">
       <button class="btn" type="button" aria-expanded="false">
+        <div class="sparkBurst" aria-hidden="true"></div>
         <div class="label">
           <div class="t">月の復習デッキと迷路の目印</div>
           <div class="s">音声なし。覚えているかをチェック</div>
@@ -620,6 +614,7 @@ body{
 
     <div class="item">
       <button class="btn" type="button" aria-expanded="false">
+        <div class="sparkBurst" aria-hidden="true"></div>
         <div class="label">
           <div class="t">更新とお知らせ</div>
           <div class="s">追加、変更、修正など</div>
@@ -636,9 +631,7 @@ body{
     </div>
   </section>
 
-  <div class="footer" id="footerText">
-    © Bryan's English School
-  </div>
+  <div class="footer" id="footerText">Bryan's English School</div>
 
 </div>
 
@@ -668,7 +661,6 @@ body{
       heroTitle.classList.add('jpTitle');
       heroLine.textContent  = 'ここは、ブーハーの世界の中で、私が生徒に直接話すページです。';
 
-      // translate top buttons (JP default)
       linkGate.textContent   = 'ブーハーに入る';
       linkPrices.textContent = '2026 料金';
       linkBooR.textContent   = 'ブーハー・アドベンチャー＆ブーリキュラム';
@@ -678,10 +670,50 @@ body{
       heroTitle.classList.remove('jpTitle');
       heroLine.textContent  = 'This is my page to talk to you directly inside the Booha world.';
 
-      // translate top buttons (EN)
       linkGate.textContent   = 'Enter Booha';
       linkPrices.textContent = '2026 Prices';
       linkBooR.textContent   = 'Booha Adventure & Boo-riculum';
+    }
+  }
+
+  function rand(min,max){ return Math.random()*(max-min)+min; }
+
+  /* ========= Accordion sparkle (small rainbow dots) ========= */
+  const rainbow = [
+    'rgba(255,214,120,.95)',
+    'rgba(94,230,255,.90)',
+    'rgba(255,126,185,.88)',
+    'rgba(200,160,255,.86)',
+    'rgba(170,255,190,.82)',
+    'rgba(255,255,255,.90)'
+  ];
+
+  function burst(btn){
+    const box = btn.querySelector('.sparkBurst');
+    if(!box) return;
+    box.innerHTML = '';
+
+    const rect = btn.getBoundingClientRect();
+    const w = rect.width;
+    const h = rect.height;
+
+    const count = 16;
+    for(let i=0;i<count;i++){
+      const d = document.createElement('span');
+      d.className = 'sparkDot';
+      const c = rainbow[(Math.random()*rainbow.length)|0];
+      d.style.background = c;
+      d.style.boxShadow = '0 0 10px ' + c + ', 0 0 18px rgba(255,255,255,.55)';
+      d.style.left = rand(10, w-10) + 'px';
+      d.style.top  = rand(10, h-10) + 'px';
+      d.style.width  = rand(4,7) + 'px';
+      d.style.height = d.style.width;
+
+      const delay = rand(0,120);
+      const dur = rand(520,760);
+      d.style.animation = 'sparkPop ' + dur + 'ms ease-out ' + delay + 'ms forwards';
+
+      box.appendChild(d);
     }
   }
 
@@ -691,6 +723,7 @@ body{
         const item = btn.closest('.item');
         const open = item.classList.toggle('open');
         btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if(open) burst(btn);
       });
     });
   }
@@ -704,42 +737,38 @@ body{
   // Default: JP
   setLang('jp');
 
-  /* ========= BoohaYellow Ghost Flyby =========
-     Randomly flies across the page, leaving a glitter trail.
-  */
+  /* ========= BoohaYellow Ghost Flyby + glitter trail ========= */
   const ghost = document.getElementById('boohaGhost');
-
   const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   if(!prefersReduced && ghost){
     let flying = false;
-
-    function rand(min,max){ return Math.random()*(max-min)+min; }
 
     function spawnTrail(x,y){
       const d = document.createElement('div');
       d.className = 'trail';
 
-      // random sparkle tone (no emojis)
-      const tones = [
-  'rgba(255,214,120,.98)',  // warm gold
-  'rgba(255,231,160,.95)',  // pale gold
-  'rgba(255,200,90,.95)',   // rich gold
-  'rgba(255,245,205,.92)',  // champagne sparkle
-  'rgba(255,170,55,.92)'    // amber gold
-];
+      // small colorful glitter (rainbow)
+      const c = rainbow[(Math.random()*rainbow.length)|0];
+      d.style.background = c;
 
-      d.style.background = tones[(Math.random()*tones.length)|0];
-      d.style.left = (x + rand(-8,8)) + 'px';
-      d.style.top  = (y + rand(-8,8)) + 'px';
-      d.style.width = rand(6,12) + 'px';
-      d.style.height= d.style.width;
-   d.style.boxShadow =
-  '0 0 10px rgba(255,215,120,.55), ' +
-  '0 0 22px rgba(255,200,90,.75), ' +
-  '0 0 36px ' + d.style.background;
-    d.style.animation = 'trailFade ' + rand(1400,2200) + 'ms ease-out forwards';
-setTimeout(()=>d.remove(), 2600);
+      d.style.left = (x + rand(-10,10)) + 'px';
+      d.style.top  = (y + rand(-10,10)) + 'px';
 
+      const s = rand(4.5,8.5);
+      d.style.width  = s + 'px';
+      d.style.height = s + 'px';
+
+      d.style.boxShadow =
+        '0 0 10px rgba(255,255,255,.35), ' +
+        '0 0 18px ' + c + ', ' +
+        '0 0 26px rgba(255,255,255,.25)';
+
+      const dur = rand(1400,2300);
+      d.style.animation = 'trailFade ' + dur + 'ms ease-out forwards';
+      document.body.appendChild(d);
+      setTimeout(()=>d.remove(), dur + 300);
+    }
 
     function flyOnce(){
       if(flying) return;
@@ -753,7 +782,7 @@ setTimeout(()=>d.remove(), 2600);
       const endX   = fromLeft ? (vw + 160) : -160;
 
       const y = rand(vh*0.12, vh*0.70);
-      const dur = rand(5200, 8200);
+      const dur = rand(5600, 9000);
 
       const wobble = rand(10, 22);
       const rot = rand(-12, 12);
@@ -762,30 +791,28 @@ setTimeout(()=>d.remove(), 2600);
       ghost.style.transform = 'translate3d(' + startX + 'px,' + y + 'px,0) rotate(' + rot + 'deg)';
       ghost.style.transition = 'none';
 
-      // start
       requestAnimationFrame(()=>{
         ghost.style.opacity = '1';
         ghost.style.transition = 'transform ' + dur + 'ms ease-in-out, opacity 700ms ease';
         ghost.style.transform = 'translate3d(' + endX + 'px,' + y + 'px,0) rotate(' + (-rot) + 'deg)';
       });
 
-      // trail timer
       const t0 = performance.now();
       const trailTimer = setInterval(()=>{
         const now = performance.now();
         const p = Math.min(1, (now - t0) / dur);
         const x = startX + (endX - startX) * p;
         const yy = y + Math.sin(p * Math.PI * 2) * wobble;
-        spawnTrail(x + 60, yy + 60);
-      }, 90);
 
-      // end
+        // behind ghost (slightly behind center)
+        spawnTrail(x + 42, yy + 70);
+      }, 60);
+
       setTimeout(()=>{
         clearInterval(trailTimer);
         ghost.style.opacity = '0';
         setTimeout(()=>{
           flying = false;
-          // next random flight
           scheduleNext();
         }, 900);
       }, dur + 150);
@@ -794,13 +821,11 @@ setTimeout(()=>d.remove(), 2600);
     function scheduleNext(){
       const wait = rand(6000, 14000);
       setTimeout(()=>{
-        // sometimes skip to keep it magical, not constant
         if(Math.random() < 0.85) flyOnce();
         else scheduleNext();
       }, wait);
     }
 
-    // first flight after short delay
     setTimeout(()=>flyOnce(), 2200);
   }
 
