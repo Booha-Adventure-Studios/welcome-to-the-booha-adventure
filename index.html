@@ -228,45 +228,45 @@ body{
   inset:-60px;
   opacity:0;
   background:
-    radial-gradient(220px 160px at 30% 50%, rgba(255,220,120,.55), rgba(255,255,255,0) 70%),
-    radial-gradient(240px 180px at 75% 40%, rgba(160,235,255,.45), rgba(255,255,255,0) 74%),
-    radial-gradient(240px 180px at 55% 80%, rgba(255,170,210,.40), rgba(255,255,255,0) 74%);
+    radial-gradient(220px 160px at 30% 50%, rgba(255,220,120,.62), rgba(255,255,255,0) 70%),
+    radial-gradient(240px 180px at 75% 40%, rgba(160,235,255,.50), rgba(255,255,255,0) 74%),
+    radial-gradient(240px 180px at 55% 80%, rgba(255,170,210,.46), rgba(255,255,255,0) 74%);
   filter: blur(1px);
   pointer-events:none;
   transition: opacity .2s ease;
 }
 
-/* sparkle burst container (small rainbow sparkles) */
+/* sparkle burst container (MORE VISIBLE) */
 .sparkBurst{
   position:absolute;
   inset:0;
   pointer-events:none;
-  z-index:0;
+  z-index:3; /* above glass */
 }
 .sparkDot{
   position:absolute;
-  width:6px;
-  height:6px;
+  width:9px;
+  height:9px;
   border-radius:999px;
   opacity:0;
-  filter: blur(.1px);
+  filter: blur(.15px);
   will-change: transform, opacity;
 }
 @keyframes sparkPop{
-  0%{ opacity:0; transform: translate3d(0,10px,0) scale(.6); }
-  30%{ opacity:.95; }
-  100%{ opacity:0; transform: translate3d(0,-18px,0) scale(.2); }
+  0%{ opacity:0; transform: translate3d(0,12px,0) scale(.6); }
+  25%{ opacity:1; }
+  100%{ opacity:0; transform: translate3d(0,-26px,0) scale(.18); }
 }
 
 /* sparkle when opened */
-.item.open .btn:before{ opacity:.85; }
+.item.open .btn:before{ opacity:.92; }
 
 .btn .label{
   display:flex;
   flex-direction:column;
   gap:2px;
   position:relative;
-  z-index:1;
+  z-index:4;
 }
 .btn .label .t{
   font-family:"Cinzel", serif;
@@ -296,11 +296,11 @@ body{
   box-shadow: 0 10px 22px rgba(0,0,0,.10);
   transition: transform .16s ease, background .16s ease;
   position:relative;
-  z-index:1;
+  z-index:4;
 }
 .item.open .chev{
   transform: rotate(45deg);
-  background: rgba(255,255,255,.90);
+  background: rgba(255,255,255,.92);
 }
 .chev:before{
   content:"+";
@@ -340,20 +340,20 @@ body{
 }
 .hidden{display:none !important}
 
-/* ===== Footer ===== */
+/* ===== Footer (slightly bigger) ===== */
 .footer{
   margin-top: 18px;
   text-align:center;
   font-family:"Cinzel", serif;
-  font-size: 14.5px;
+  font-size: 16px;        /* bigger */
   font-weight: 900;
-  letter-spacing:.35px;
-  color: rgba(0,0,0,.85);
-  padding: 18px 10px 0;
-  text-shadow: 0 1px 0 rgba(255,255,255,.55); /* less glow */
+  letter-spacing:.45px;
+  color: rgba(0,0,0,.88);
+  padding: 22px 10px 0;   /* more breathing room */
+  text-shadow: 0 1px 0 rgba(255,255,255,.60);
 }
 
-/* ===== BoohaYellow Ghost Flyby + glitter trail ===== */
+/* ===== Booha Ghost ===== */
 .ghost{
   position: fixed;
   left: -160px;
@@ -367,15 +367,13 @@ body{
   will-change: transform, opacity;
 }
 
-/* ===== Booha Rocket Trail (REPLACE OLD .trail + trailFade + media block) ===== */
+/* ===== Rocket Trail Particles ===== */
 .trail{
   position: fixed;
-  width: 10px;
-  height: 6px;                 /* a little “streak” shape */
-  border-radius: 999px;
   pointer-events:none;
-  z-index: 49;                 /* behind ghost (ghost is 50) */
+  z-index: 49; /* behind ghost */
   opacity: 1;
+  border-radius: 999px;
   background: radial-gradient(circle at 30% 50%,
     rgba(255,255,255,1),
     rgba(255,215,120,.95),
@@ -387,21 +385,41 @@ body{
     0 0 34px rgba(255,235,170,.35);
   filter: blur(.15px);
   transform-origin: center;
-  will-change: transform, opacity;
+  will-change: transform, opacity, width, height;
 }
-
 @keyframes rocketFade{
-  0%   { opacity:1; transform: scale(1.1); }
+  0%   { opacity:1; transform: scale(1.08); }
   100% { opacity:0; transform: scale(.25); }
 }
 
-/* Keep your reduced-motion behavior, but also disable the trail */
+/* Waypoint shimmer ring */
+.ring{
+  position: fixed;
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+  border: 2px solid rgba(255,215,120,.55);
+  box-shadow:
+    0 0 18px rgba(255,215,120,.55),
+    0 0 40px rgba(255,235,180,.30);
+  pointer-events:none;
+  z-index: 48;
+  opacity: 0;
+  transform: scale(.7);
+  will-change: transform, opacity;
+}
+@keyframes ringPop{
+  0%{ opacity:0; transform: scale(.6); }
+  20%{ opacity:1; }
+  100%{ opacity:0; transform: scale(1.6); }
+}
+
 @media (prefers-reduced-motion: reduce){
   .aLink{ animation: none !important; }
   .ghost{ display:none !important; }
   .trail{ display:none !important; }
+  .ring{ display:none !important; }
 }
-
 </style>
 </head>
 
@@ -413,7 +431,6 @@ body{
 
   <div class="topbar" role="navigation" aria-label="Booha links and language toggle">
     <div class="topStack">
-
       <div class="links" aria-label="Top links">
         <a class="aLink g1" id="linkGate" href="https://www.bryanharper.tokyo/booha-gate" target="_blank" rel="noopener">Enter Booha</a>
         <a class="aLink g2" id="linkPrices" href="https://booha-adventure-studios.github.io/booha-system-and-prices-2026/" target="_blank" rel="noopener">2026 Prices</a>
@@ -424,7 +441,6 @@ body{
         <button class="langBtn" id="btnEN" type="button">English</button>
         <button class="langBtn active" id="btnJP" type="button">日本語</button>
       </div>
-
     </div>
   </div>
 
@@ -644,7 +660,6 @@ body{
   </section>
 
   <div class="footer" id="footerText">Bryan's English School</div>
-
 </div>
 
 <script>
@@ -690,17 +705,17 @@ body{
 
   function rand(min,max){ return Math.random()*(max-min)+min; }
 
-  /* ========= Accordion sparkle (small rainbow dots) ========= */
+  /* ========= Accordion sparkle (MORE VISIBLE) ========= */
   const rainbow = [
-    'rgba(255,214,120,.95)',
-    'rgba(94,230,255,.90)',
-    'rgba(255,126,185,.88)',
-    'rgba(200,160,255,.86)',
-    'rgba(170,255,190,.82)',
-    'rgba(255,255,255,.90)'
+    'rgba(255,214,120,.98)', /* gold bias */
+    'rgba(255,235,170,.95)',
+    'rgba(94,230,255,.92)',
+    'rgba(255,126,185,.90)',
+    'rgba(200,160,255,.88)',
+    'rgba(255,255,255,.95)'
   ];
 
-  function burst(btn){
+  function burst(btn, strength=1){
     const box = btn.querySelector('.sparkBurst');
     if(!box) return;
     box.innerHTML = '';
@@ -709,24 +724,104 @@ body{
     const w = rect.width;
     const h = rect.height;
 
-    const count = 16;
+    const count = Math.round(22 * strength);
     for(let i=0;i<count;i++){
       const d = document.createElement('span');
       d.className = 'sparkDot';
       const c = rainbow[(Math.random()*rainbow.length)|0];
       d.style.background = c;
-      d.style.boxShadow = '0 0 10px ' + c + ', 0 0 18px rgba(255,255,255,.55)';
-      d.style.left = rand(10, w-10) + 'px';
-      d.style.top  = rand(10, h-10) + 'px';
-      d.style.width  = rand(4,7) + 'px';
-      d.style.height = d.style.width;
+      d.style.boxShadow =
+        '0 0 14px ' + c + ', 0 0 26px rgba(255,255,255,.70), 0 0 40px rgba(255,215,120,.35)';
 
-      const delay = rand(0,120);
-      const dur = rand(520,760);
+      d.style.left = rand(10, w-10) + 'px';
+      d.style.top  = rand(8, h-8) + 'px';
+
+      const size = rand(6, 11) * strength;
+      d.style.width  = size + 'px';
+      d.style.height = size + 'px';
+
+      const delay = rand(0,90);
+      const dur = rand(520,820);
       d.style.animation = 'sparkPop ' + dur + 'ms ease-out ' + delay + 'ms forwards';
 
       box.appendChild(d);
     }
+  }
+
+  /* ========= Booha Ghost Rocket System ========= */
+  const ghost = document.getElementById('boohaGhost');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // reactive “boost” when opening accordion
+  let boostUntil = 0;
+
+  function nclamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
+
+  function makeRing(x,y){
+    const r = document.createElement('div');
+    r.className = 'ring';
+    r.style.left = (x-26) + 'px';
+    r.style.top  = (y-26) + 'px';
+    r.style.animation = 'ringPop 700ms ease-out forwards';
+    document.body.appendChild(r);
+    setTimeout(()=>r.remove(), 780);
+  }
+
+  function emitTrail(x, y, angleDeg, speedPxPerS){
+    const d = document.createElement('div');
+    d.className = 'trail';
+
+    // speed taper: faster = longer + brighter
+    const sp = nclamp(speedPxPerS, 120, 1400);
+    const t = (sp - 120) / (1400 - 120); // 0..1
+    const w = 8 + t * 12;  // length
+    const h = 5 + t * 4;   // thickness
+
+    d.style.width  = w + 'px';
+    d.style.height = h + 'px';
+
+    // slight extra glow on speed/boost
+    const glow = 0.55 + t*0.55 + (performance.now() < boostUntil ? 0.35 : 0);
+    d.style.boxShadow =
+      `0 0 ${12+ t*14}px rgba(255,215,120,${glow}),
+       0 0 ${26+ t*20}px rgba(255,235,170,${0.35 + t*0.35})`;
+
+    d.style.left = x + 'px';
+    d.style.top  = y + 'px';
+    d.style.transform = `rotate(${angleDeg}deg) translateX(-6px)`;
+
+    const dur = 720 - t*180; // faster fades a bit quicker
+    d.style.animation = `rocketFade ${dur}ms linear forwards`;
+
+    document.body.appendChild(d);
+    setTimeout(()=>d.remove(), dur + 60);
+  }
+
+  function sparkleAt(x,y, amount=14){
+    // quick gold burst near ghost (screen coords)
+    for(let i=0;i<amount;i++){
+      const s = document.createElement('div');
+      s.className = 'trail';
+      const size = rand(4,9);
+      s.style.width = (size + rand(2,6))+'px';
+      s.style.height = (size)+'px';
+      s.style.left = (x + rand(-18,18))+'px';
+      s.style.top  = (y + rand(-14,14))+'px';
+      s.style.transform = `rotate(${rand(-20,20)}deg) translateX(${rand(-6,6)}px)`;
+      s.style.animation = `rocketFade ${rand(520,820)}ms linear forwards`;
+      document.body.appendChild(s);
+      setTimeout(()=>s.remove(), 900);
+    }
+  }
+
+  function parseTranslateXY(transformStr){
+    // expects: translate(Xpx,Ypx) or translate3d(Xpx,Ypx,0)
+    // fallback 0,0 if missing
+    const m2 = /translate\(\s*([-\d.]+)px,\s*([-\d.]+)px\s*\)/.exec(transformStr);
+    if(m2) return {x: parseFloat(m2[1])||0, y: parseFloat(m2[2])||0};
+    const m3 = /translate3d\(\s*([-\d.]+)px,\s*([-\d.]+)px,\s*([-\d.]+)px\s*\)/.exec(transformStr);
+    if(m3) return {x: parseFloat(m3[1])||0, y: parseFloat(m3[2])||0};
+    return {x:0,y:0};
   }
 
   function bindAccordion(root){
@@ -735,7 +830,18 @@ body{
         const item = btn.closest('.item');
         const open = item.classList.toggle('open');
         btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-        if(open) burst(btn);
+
+        // stronger visible sparkles
+        burst(btn, open ? 1.2 : 0.8);
+
+        // ghost reacts: boost + extra glitter
+        if(open){
+          boostUntil = performance.now() + 900; // 0.9s boost
+          const rect = btn.getBoundingClientRect();
+          const cx = rect.left + rect.width*0.82;
+          const cy = rect.top  + rect.height*0.55;
+          sparkleAt(cx, cy, 18); // “magic from the tab”
+        }
       });
     });
   }
@@ -749,134 +855,145 @@ body{
   // Default: JP
   setLang('jp');
 
- /* ========= Booha Ghost Rocket Flyby ========= */
-const ghost = document.getElementById('boohaGhost');
-const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!prefersReduced && ghost){
+    let flying = false;
 
-if(!prefersReduced && ghost){
-  let flying = false;
-  let lastX = 0, lastY = 0;
-
-  function emitTrail(x, y, angle){
-    const d = document.createElement('div');
-    d.className = 'trail';
-
-    d.style.left = x + 'px';
-    d.style.top  = y + 'px';
-    d.style.transform =
-      `rotate(${angle}deg) translateX(-6px)`;
-
-    d.style.animation = 'rocketFade 900ms linear forwards';
-    document.body.appendChild(d);
-    setTimeout(()=>d.remove(), 900);
-  }
-
-  function flyOnce(){
-    if(flying) return;
-    flying = true;
-
-    const vw = innerWidth;
-    const vh = innerHeight;
-
-    const fromLeft = Math.random() < 0.5;
-    const startX = fromLeft ? -160 : vw + 160;
-    const endX   = fromLeft ? vw + 160 : -160;
-    const y      = Math.random()*(vh*0.55)+vh*0.15;
-    const dur    = Math.random()*3000+6000;
-
-    ghost.style.transition = 'none';
-    ghost.style.opacity = '1';
-    ghost.style.transform = `translate(${startX}px,${y}px)`;
-
-    requestAnimationFrame(()=>{
-      ghost.style.transition = `transform ${dur}ms linear`;
-      ghost.style.transform = `translate(${endX}px,${y}px)`;
-    });
-
-    const start = performance.now();
-
-    function tick(now){
-      const p = Math.min(1,(now-start)/dur);
-      const x = startX + (endX-startX)*p;
-      const angle = fromLeft ? 180 : 0;
-
-      emitTrail(
-        x + (fromLeft ? 80 : 40),
-        y + 70,
-        angle
-      );
-
-      if(p<1) requestAnimationFrame(tick);
-      else{
-        ghost.style.opacity='0';
-        flying=false;
-        scheduleNext();
+    // “maze waypoint” plan: 2–3 waypoints across the screen
+    function buildWaypoints(startX, endX, y){
+      const vw = innerWidth;
+      const count = (Math.random() < 0.55) ? 2 : 3;
+      const pts = [];
+      for(let i=1;i<=count;i++){
+        const p = i/(count+1);
+        const x = startX + (endX-startX)*p;
+        const yy = y + Math.sin(p*Math.PI*2)*rand(8,18);
+        // nudge a little toward center so it feels like “maze stops”
+        pts.push({x: x + rand(-vw*0.05, vw*0.05), y: yy + rand(-10,10)});
       }
+      return pts;
     }
 
-    requestAnimationFrame(tick);
-  }
+    async function animateTo(x1,y1,x2,y2,dur){
+      return new Promise(resolve=>{
+        ghost.style.transition = 'none';
+        ghost.style.transform = `translate(${x1}px,${y1}px)`;
+        requestAnimationFrame(()=>{
+          ghost.style.transition = `transform ${dur}ms linear`;
+          ghost.style.transform = `translate(${x2}px,${y2}px)`;
+          setTimeout(resolve, dur);
+        });
+      });
+    }
 
-  function scheduleNext(){
-    setTimeout(()=>flyOnce(), Math.random()*8000+6000);
-  }
+    async function pauseAt(x,y){
+      // quick ring + spiral sparkle
+      makeRing(x+65, y+70);
+      sparkleAt(x+65, y+70, 16);
+      await new Promise(r=>setTimeout(r, rand(280,520)));
+    }
 
-  setTimeout(flyOnce, 2000);
-}
+    function flyOnce(){
+      if(flying) return;
+      flying = true;
 
-      const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-      const vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+      const vw = innerWidth;
+      const vh = innerHeight;
 
       const fromLeft = Math.random() < 0.5;
-      const startX = fromLeft ? -160 : (vw + 160);
-      const endX   = fromLeft ? (vw + 160) : -160;
+      const startX = fromLeft ? -160 : vw + 160;
+      const endX   = fromLeft ? vw + 160 : -160;
+      const yBase  = rand(vh*0.14, vh*0.70);
 
-      const y = rand(vh*0.12, vh*0.70);
-      const dur = rand(5600, 9000);
+      const angleDeg = fromLeft ? 180 : 0;
 
-      const wobble = rand(10, 22);
-      const rot = rand(-12, 12);
+      ghost.style.opacity = '1';
 
-      ghost.style.opacity = '0';
-      ghost.style.transform = 'translate3d(' + startX + 'px,' + y + 'px,0) rotate(' + rot + 'deg)';
-      ghost.style.transition = 'none';
+      // trail loop reads CURRENT computed translate and uses speed taper
+      let prev = null;
+      let rafId = 0;
 
-      requestAnimationFrame(()=>{
+      const trailTick = (now)=>{
+        const cs = getComputedStyle(ghost);
+        const tr = cs.transform;
+        let x=0,y=0;
+
+        if(tr && tr !== 'none'){
+          // matrix(a,b,c,d,tx,ty)
+          const mm = /matrix\(([^)]+)\)/.exec(tr);
+          if(mm){
+            const parts = mm[1].split(',').map(s=>parseFloat(s.trim()));
+            x = parts[4] || 0;
+            y = parts[5] || 0;
+          }else{
+            const xy = parseTranslateXY(cs.transform);
+            x = xy.x; y = xy.y;
+          }
+        }
+
+        const gx = x + (fromLeft ? 78 : 42); // behind-ish
+        const gy = y + 70;
+
+        let speed = 420;
+        if(prev){
+          const dt = (now - prev.t) / 1000;
+          if(dt > 0){
+            const dx = gx - prev.x;
+            const dy = gy - prev.y;
+            speed = Math.sqrt(dx*dx + dy*dy) / dt;
+          }
+        }
+        prev = {x: gx, y: gy, t: now};
+
+        // boost makes it “hotter”
+        const boosted = (now < boostUntil);
+        emitTrail(
+          gx + rand(-7,7),
+          gy + rand(-6,6),
+          angleDeg + rand(-8,8),
+          speed * (boosted ? 1.25 : 1.0)
+        );
+
+        rafId = requestAnimationFrame(trailTick);
+      };
+
+      // plan: start -> waypoints -> end
+      (async ()=>{
+        const waypoints = buildWaypoints(startX, endX, yBase);
+
+        // start at first position
+        ghost.style.transition = 'none';
+        ghost.style.transform = `translate(${startX}px,${yBase}px)`;
         ghost.style.opacity = '1';
-        ghost.style.transition = 'transform ' + dur + 'ms ease-in-out, opacity 700ms ease';
-        ghost.style.transform = 'translate3d(' + endX + 'px,' + y + 'px,0) rotate(' + (-rot) + 'deg)';
-      });
 
-      const t0 = performance.now();
-      const trailTimer = setInterval(()=>{
-        const now = performance.now();
-        const p = Math.min(1, (now - t0) / dur);
-        const x = startX + (endX - startX) * p;
-        const yy = y + Math.sin(p * Math.PI * 2) * wobble;
+        rafId = requestAnimationFrame(trailTick);
 
-        // behind ghost (slightly behind center)
-        spawnTrail(x + 42, yy + 70);
-      }, 60);
+        // segment durations (vary)
+        let curX = startX, curY = yBase;
 
-      setTimeout(()=>{
-        clearInterval(trailTimer);
+        for(const wp of waypoints){
+          await animateTo(curX, curY, wp.x, wp.y, rand(2200, 3600));
+          await pauseAt(wp.x, wp.y);
+          curX = wp.x; curY = wp.y;
+        }
+
+        await animateTo(curX, curY, endX, yBase, rand(2600, 4200));
+
+        cancelAnimationFrame(rafId);
         ghost.style.opacity = '0';
+
         setTimeout(()=>{
           flying = false;
           scheduleNext();
-        }, 900);
-      }, dur + 150);
+        }, 700);
+      })();
     }
 
     function scheduleNext(){
-      const wait = rand(6000, 14000);
-      setTimeout(()=>{
-        if(Math.random() < 0.85) flyOnce();
-        else scheduleNext();
-      }, wait);
+      const wait = rand(5200, 11000);
+      setTimeout(()=>flyOnce(), wait);
     }
 
-    setTimeout(()=>flyOnce(), 2200);
+    setTimeout(()=>flyOnce(), 2000);
   }
 
 })();
