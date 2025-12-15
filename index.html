@@ -1,1 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Welcome to the Booha Adventure</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Noto+Sans+JP:wght@500;700;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --ink:#111;
+  --muted:#2b2b2b;
+  --glass:rgba(255,255,255,.72);
+  --glass2:rgba(255,255,255,.58);
+  --line:rgba(0,0,0,.12);
+  --shadow:0 18px 40px rgba(0,0,0,.18);
+  --radius:22px;
+  --radius2:18px;
+  --spark:rgba(255, 220, 120, .75);
+  --spark2:rgba(160, 235, 255, .55);
+  --spark3:rgba(255, 170, 210, .45);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  color:var(--ink);
+  background:
+    radial-gradient(1200px 700px at 10% 0%, rgba(255,255,255,.45), rgba(255,255,255,0) 55%),
+    radial-gradient(900px 600px at 90% 20%, rgba(255,255,255,.35), rgba(255,255,255,0) 60%),
+    url("boohatrees.png") center/cover fixed no-repeat;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  overflow-x:hidden;
+}
+
+.wrap{
+  max-width: 980px;
+  margin: 22px auto 80px;
+  padding: 0 16px;
+}
+
+.topbar{
+  background: var(--glass);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 14px 14px;
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+}
+
+.brand{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  min-width: 220px;
+}
+.brand .title{
+  font-family: "Cinzel", serif;
+  font-weight: 800;
+  letter-spacing:.5px;
+  font-size: 18px;
+  line-height:1.15;
+}
+.brand .sub{
+  font-size: 12.5px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.links{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:center;
+}
+
+.aLink{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.55);
+  color: var(--ink);
+  text-decoration:none;
+  font-weight:800;
+  font-size: 13px;
+  box-shadow: 0 10px 24px rgba(0,0,0,.10);
+  transition: transform .12s ease, background .12s ease, box-shadow .12s ease;
+  white-space:nowrap;
+}
+.aLink:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.72);
+  box-shadow: 0 16px 30px rgba(0,0,0,.14);
+}
+.aLink:active{transform: translateY(0px)}
+
+.langToggle{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  justify-content:flex-end;
+  flex: 1 1 auto;
+  min-width: 220px;
+}
+
+.langBtn{
+  border:1px solid var(--line);
+  background: rgba(255,255,255,.55);
+  color: var(--ink);
+  font-weight:900;
+  padding:10px 12px;
+  border-radius: 999px;
+  cursor:pointer;
+  box-shadow: 0 10px 24px rgba(0,0,0,.10);
+  transition: transform .12s ease, background .12s ease, box-shadow .12s ease;
+}
+.langBtn:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.72);
+  box-shadow: 0 16px 30px rgba(0,0,0,.14);
+}
+.langBtn.active{
+  background: rgba(255,255,255,.90);
+  border-color: rgba(0,0,0,.22);
+}
+
+.hero{
+  margin: 16px 0 14px;
+  background: var(--glass2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 18px 18px;
+  position:relative;
+  overflow:hidden;
+}
+
+.hero:before{
+  content:"";
+  position:absolute; inset:-40px;
+  background:
+    radial-gradient(220px 160px at 18% 40%, var(--spark), rgba(255,255,255,0) 65%),
+    radial-gradient(240px 180px at 78% 30%, var(--spark2), rgba(255,255,255,0) 70%),
+    radial-gradient(220px 180px at 62% 78%, var(--spark3), rgba(255,255,255,0) 70%);
+  filter: blur(1px);
+  opacity:.55;
+  pointer-events:none;
+}
+
+.heroInner{position:relative}
+.hero h1{
+  margin:0 0 8px;
+  font-family:"Cinzel", serif;
+  font-weight: 900;
+  letter-spacing:.6px;
+  font-size: clamp(22px, 3.2vw, 34px);
+}
+.hero p{
+  margin:0;
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #1a1a1a;
+}
+
+.accordion{
+  background: var(--glass);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  overflow:hidden;
+}
+
+.item{
+  border-top: 1px solid var(--line);
+}
+.item:first-child{border-top:none}
+
+.btn{
+  width:100%;
+  text-align:left;
+  padding: 16px 18px;
+  background: transparent;
+  border:0;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+}
+
+.btn .label{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+
+.btn .label .t{
+  font-family:"Cinzel", serif;
+  font-weight: 900;
+  letter-spacing:.4px;
+  font-size: 16px;
+}
+.jp .btn .label .t{
+  font-family:"Noto Sans JP", system-ui, sans-serif;
+  letter-spacing:.2px;
+}
+.btn .label .s{
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.chev{
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.55);
+  display:grid;
+  place-items:center;
+  flex:0 0 auto;
+  box-shadow: 0 10px 22px rgba(0,0,0,.10);
+  transition: transform .16s ease, background .16s ease;
+}
+.item.open .chev{
+  transform: rotate(45deg);
+  background: rgba(255,255,255,.85);
+}
+.chev:before{
+  content:"+";
+  font-weight: 1000;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.panel{
+  display:none;
+  padding: 0 18px 18px 18px;
+}
+.item.open .panel{display:block}
+
+.text{
+  background: rgba(255,255,255,.62);
+  border: 1px solid rgba(0,0,0,.10);
+  border-radius: var(--radius2);
+  padding: 16px 16px;
+  line-height: 1.82;
+  font-weight: 700;
+  color: #121212;
+  box-shadow: 0 12px 26px rgba(0,0,0,.10);
+}
+
+.text .lead{
+  font-weight: 900;
+  font-family:"Cinzel", serif;
+  letter-spacing:.2px;
+}
+.jp .text .lead{
+  font-family:"Noto Sans JP", system-ui, sans-serif;
+  letter-spacing:.2px;
+}
+
+.smallNote{
+  margin-top:12px;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #222;
+  opacity:.9;
+}
+
+.hidden{display:none !important}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <div class="topbar" role="navigation" aria-label="Booha links and language toggle">
+    <div class="brand">
+      <div class="title">Welcome to the Booha Adventure</div>
+      <div class="sub" id="subTitle">A message for Booha Adventure students</div>
+    </div>
+
+    <div class="links">
+      <a class="aLink" href="https://www.bryanharper.tokyo/booha-gate" target="_blank" rel="noopener">Booha Gate</a>
+      <a class="aLink" href="https://booha-adventure-studios.github.io/booha-system-and-prices-2026/" target="_blank" rel="noopener">Booha System & Prices</a>
+      <a class="aLink" href="https://booha-adventure-studios.github.io/Booha-adventure-and-boo-riculum/" target="_blank" rel="noopener">Booha Adventure & Boo-riculum</a>
+    </div>
+
+    <div class="langToggle" aria-label="Language toggle">
+      <button class="langBtn active" id="btnEN" type="button">English</button>
+      <button class="langBtn" id="btnJP" type="button">日本語</button>
+    </div>
+  </div>
+
+  <div class="hero" aria-label="Intro">
+    <div class="heroInner">
+      <h1 id="heroTitle">Welcome to the Booha Adventure</h1>
+      <p id="heroLine">This is my page to talk to you directly inside the Booha world.</p>
+    </div>
+  </div>
+
+  <!-- EN ACCORDION -->
+  <section class="accordion en" id="accEN" aria-label="Accordion English">
+    <div class="item open">
+      <button class="btn" type="button" aria-expanded="true">
+        <div class="label">
+          <div class="t">Welcome to the Booha Adventure</div>
+          <div class="s">What this world is, and why I built it</div>
+        </div>
+        <div class="chev" aria-hidden="true"></div>
+      </button>
+      <div class="panel">
+        <div class="text">
+          <div class="lead">Welcome to the Booha Adventure.</div>
+          This isn’t just a page with games on it. It’s a learning world that opens a little more every time you move forward.
+          I built Booha because I kept watching students study English, forget it, study it again, and slowly start to believe the problem was them.
+          It wasn’t. The real problem was that English never stayed in one place long enough to feel familiar. Booha gives English a place to live.
+          Every week, you move through the maze and reach a checkpoint. When you reach it, two things open at the same time: your weekly study decks and your weekly Booha adventure game decks.
+          One prepares your brain. The other lets you use what you prepared. If you engage with both, even a little each day, English stops feeling heavy and starts feeling normal.
+          Booha isn’t about rushing or being perfect. It’s about moving forward, one checkpoint at a time.
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <button class="btn" type="button" aria-expanded="false">
+        <div class="label">
+          <div class="t">Booha Study Decks</div>
+          <div class="s">Full-audio cards that build your weekly foundation</div>
+        </div>
+        <div class="chev" aria-hidden="true"></div>
+      </button>
+      <div class="panel">
+        <div class="text">
+          The study decks are the foundation of everything in the Booha Adventure. Nothing else works properly without them.
+          Every week, the study decks always contain the same three types of cards: vocabulary cards, sentence cards, and question cards, and they are all full audio.
+          The vocabulary cards train your ear and your eyes to recognize the week’s core words quickly. The sentence cards show how those words actually live inside real English, so you don’t memorize isolated pieces.
+          The question cards prepare you to react and answer without freezing, because you’ve already met the language in a calm way before the games ask you to use it.
+          These decks are not meant to be finished once. They are meant to be visited often until the English starts to feel familiar.
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <button class="btn" type="button" aria-expanded="false">
+        <div class="label">
+          <div class="t">Booha Adventure Game Decks</div>
+          <div class="s">Weekly games that turn study into action</div>
+        </div>
+        <div class="chev" aria-hidden="true"></div>
+      </button>
+      <div class="panel">
+        <div class="text">
+          The adventure game decks are where the English you studied turns into action.
+          Each weekly adventure deck includes Tap Match, Say the Word, Word Builder, Eigo Pera Pera, Make the Sentences, and Eigo Adventure.
+          Tap Match builds fast recognition. Say the Word builds speaking confidence and accuracy. Word Builder strengthens spelling and word shape.
+          Eigo Pera Pera pushes quick thinking and reaction. Make the Sentences trains structure and word order. Eigo Adventure brings everything together into a weekly challenge that feels like a real moment, not a worksheet.
+          When the study decks feel familiar, these games feel smooth. When the study decks are skipped, these games feel confusing. The system is honest like that.
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <button class="btn" type="button" aria-expanded="false">
+        <div class="label">
+          <div class="t">Monthly Review Decks and Maze Markers</div>
+          <div class="s">No-audio checks that prove what stayed in your memory</div>
+        </div>
+        <div class="chev" aria-hidden="true"></div>
+      </button>
+      <div class="panel">
+        <div class="text">
+          Booha is designed so your English doesn’t reset every week.
+          In the middle of each month, you’ll see glowing wooden signs appear on the maze. These are numbered markers for the month: January is “1,” February is “2,” and so on.
+          When you reach them, you unlock the monthly review decks. These decks have no audio on purpose. They are there to check what you’ve learned, not teach something new.
+          The review activities are Word Typing, Pick the Sentence, Word Speed, Spot the Mistake, Sentence Order, and Yes / No Check.
+          These games look simple because the controls are simple, but guessing won’t take you far. The only way forward is understanding.
+          And sometimes you’ll see magical trees appear somewhere on the maze. These special trees unlock unique review-style challenges. They are landmarks in the world, showing that your skills have connected enough to unlock something new.
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <button class="btn" type="button" aria-expanded="false">
+        <div class="label">
+          <div class="t">Updates and Notes</div>
+          <div class="s">What changed, what was fixed, and what’s new</div>
+        </div>
+        <div class="chev" aria-hidden="true"></div>
+      </button>
+      <div class="panel">
+        <div class="text">
+          This is the living part of the Booha Adventure. When games are added, systems change, or bugs are fixed, I’ll write it here.
+          If you notice something broken, confusing, or interesting enough to improve, email the school so it doesn’t get lost.
+          <div class="smallNote">I’ll keep this section updated as the Booha world grows.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JP ACCORDION -->
+  <section class="accordion jp hidden" id="accJP" aria-label="Accordion Japanese">
+    <div class="item open">
+      <button class="btn" type="button" aria-expanded="true">
+        <div class="label">
+          <div class="t">ブーハー・アドベンチャーへようこそ</div>
+          <div class="s">この世界は何か、なぜ作ったのか</div>
+        </div>
+        <div class="chev" aria-hidden="true"></div>
+      </button>
+      <div class="panel">
+        <div class="text">
+          <div class="lead">ブーハー・アドベンチャーへようこそ。</div>
+          これは、ただのゲーム集のページではありません。進むたびに少しずつ開いていく「英語の世界」です。
+          私がブーハーを作った理由はシンプルです。英語を勉強しても忘れて、また勉強して忘れて、「自分は英語が苦手なんだ」と思い始める生徒をたくさん見てきました。
+          でも問題はあなたではありません。英語が、慣れる前に消えてしまう作りになっていただけです。ブーハーは、英語がちゃんと住める場所を作ります。
+          毎週、迷路のチェックポイントに着くと、週の学習デッキと週のアドベンチャーゲームデッキが同時に開きます。
+          学習デッキが脳を準備して、ゲームがその準備を使わせてくれます。毎日少しでも関われば、英語は重くなくなり、ふつうに感じられるようになります。
+          ブーハーは急ぐ世界ではありません。完璧でもありません。チェックポイントを一つずつ進む世界です。
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <button class="btn" type="button" aria-expanded="false">
+        <div class="label">
+          <div class="t">学習デッキ</div>
+          <div class="s">毎週の土台。すべてフル音声</div>
+        </div>
+        <div class="chev" aria-hidden="true"></div>
+      </button>
+      <div class="panel">
+        <div class="text">
+          学習デッキは、ブーハーの土台です。ここが弱いと、他がうまく回りません。
+          毎週、学習デッキには必ず「単語カード」「文カード」「質問カード」の3つが入っています。全部フル音声です。
+          単語カードは、その週の中心になる単語を、音と文字の両方で素早く認識できるようにします。文カードは、単語が本当の英語の中でどう使われるかを見せます。
+          質問カードは、ゲームで答えるときに固まらないように、先に落ち着いて英語に触れておくための準備です。
+          1回で終わらせるものではありません。何度も開いて、英語が「見たことある」「聞いたことある」になっていくのが目的です。
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <button class="btn" type="button" aria-expanded="false">
+        <div class="label">
+          <div class="t">アドベンチャーゲームデッキ</div>
+          <div class="s">学習した英語を動かす週のゲーム</div>
+        </div>
+        <div class="chev" aria-hidden="true"></div>
+      </button>
+      <div class="panel">
+        <div class="text">
+          アドベンチャーゲームデッキは、学習した英語を「使える形」に変える場所です。
+          毎週のデッキには、Tap Match、Say the Word、Word Builder、Eigo Pera Pera、Make the Sentences、Eigo Adventure が入っています。
+          Tap Matchは認識スピード。Say the Wordは発音と自信。Word Builderはスペリングと単語の形。
+          Eigo Pera Peraは反応の速さ。Make the Sentencesは語順と文の作り方。Eigo Adventureは全部をまとめた週のチャレンジです。
+          学習デッキが慣れているほど、ゲームはスムーズになります。学習を飛ばすと、ゲームが急に難しく感じます。ブーハーはそこが正直です。
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <button class="btn" type="button" aria-expanded="false">
+        <div class="label">
+          <div class="t">月の復習デッキと迷路の目印</div>
+          <div class="s">音声なし。覚えているかをチェック</div>
+        </div>
+        <div class="chev" aria-hidden="true"></div>
+      </button>
+      <div class="panel">
+        <div class="text">
+          ブーハーは、毎週リセットされる英語にならないように作っています。
+          月の真ん中頃になると、迷路のどこかに「光る木の看板」が出てきます。これは月の番号の目印です。1は1月、2は2月、という感じです。
+          そこに行くと、その月全体の復習デッキが開きます。復習デッキは、音声なしです。わざとです。学んだものが、本当に残っているかをチェックするためです。
+          復習の活動は、Word Typing、Pick the Sentence、Word Speed、Spot the Mistake、Sentence Order、Yes / No Check です。
+          操作は簡単に見えますが、適当に押しても前には進めません。理解している人が強いゲームです。
+          そして、ときどき迷路のどこかに「魔法の木」が現れます。これは特別な復習チャレンジが開く場所です。飾りではなく、世界のランドマークです。
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <button class="btn" type="button" aria-expanded="false">
+        <div class="label">
+          <div class="t">更新とお知らせ</div>
+          <div class="s">追加、変更、修正など</div>
+        </div>
+        <div class="chev" aria-hidden="true"></div>
+      </button>
+      <div class="panel">
+        <div class="text">
+          ここはブーハーの「生きている場所」です。ゲームの追加、仕組みの変更、バグの修正などは、ここに書きます。
+          もし何かおかしい、分かりにくい、もっと良くできそう、と思ったら、学校にメールしてください。埋もれないようにするためです。
+          <div class="smallNote">この欄は、ブーハーの成長に合わせて更新します。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  const accEN = document.getElementById('accEN');
+  const accJP = document.getElementById('accJP');
+  const btnEN = document.getElementById('btnEN');
+  const btnJP = document.getElementById('btnJP');
+  const heroTitle = document.getElementById('heroTitle');
+  const heroLine  = document.getElementById('heroLine');
+  const subTitle  = document.getElementById('subTitle');
+
+  function setLang(lang){
+    const isJP = (lang === 'jp');
+    accEN.classList.toggle('hidden', isJP);
+    accJP.classList.toggle('hidden', !isJP);
+
+    btnEN.classList.toggle('active', !isJP);
+    btnJP.classList.toggle('active', isJP);
+
+    if(isJP){
+      heroTitle.textContent = 'ブーハー・アドベンチャーへようこそ';
+      heroLine.textContent  = 'ここは、ブーハーの世界の中で、私が生徒に直接話すページです。';
+      subTitle.textContent  = 'ブーハー・アドベンチャーの生徒へ';
+      document.documentElement.lang = 'ja';
+    }else{
+      heroTitle.textContent = 'Welcome to the Booha Adventure';
+      heroLine.textContent  = 'This is my page to talk to you directly inside the Booha world.';
+      subTitle.textContent  = 'A message for Booha Adventure students';
+      document.documentElement.lang = 'en';
+    }
+  }
+
+  function bindAccordion(root){
+    root.querySelectorAll('.item .btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const item = btn.closest('.item');
+        const open = item.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    });
+  }
+
+  bindAccordion(accEN);
+  bindAccordion(accJP);
+
+  btnEN.addEventListener('click', ()=>setLang('en'));
+  btnJP.addEventListener('click', ()=>setLang('jp'));
+
+  // Default: EN
+  setLang('en');
+})();
+</script>
+</body>
+</html>
