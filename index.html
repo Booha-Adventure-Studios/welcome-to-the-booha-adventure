@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <title>Welcome to the Booha Adventure</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Noto+Sans+JP:wght@500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Noto+Sans+JP:wght@500;700;900&display=swap" rel="stylesheet">
 
 <style>
 :root{
   --ink:#111;
   --muted:#2b2b2b;
-  --glass:rgba(255,255,255,.72);
-  --glass2:rgba(255,255,255,.58);
+  --glass:rgba(255,255,255,.74);
+  --glass2:rgba(255,255,255,.62);
   --line:rgba(0,0,0,.12);
   --shadow:0 18px 40px rgba(0,0,0,.18);
   --radius:22px;
@@ -37,10 +37,11 @@ body{
 
 .wrap{
   max-width: 980px;
-  margin: 22px auto 80px;
+  margin: 18px auto 80px;
   padding: 0 16px;
 }
 
+/* ===== Top UI ===== */
 .topbar{
   background: var(--glass);
   border: 1px solid var(--line);
@@ -49,75 +50,88 @@ body{
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   padding: 14px 14px;
-  display:flex;
-  gap:12px;
-  align-items:center;
-  justify-content:space-between;
-  flex-wrap:wrap;
 }
 
-.brand{
+/* remove the big title from the very top (brand block removed) */
+.topStack{
   display:flex;
   flex-direction:column;
-  gap:2px;
-  min-width: 220px;
-}
-.brand .title{
-  font-family: "Cinzel", serif;
-  font-weight: 800;
-  letter-spacing:.5px;
-  font-size: 18px;
-  line-height:1.15;
-}
-.brand .sub{
-  font-size: 12.5px;
-  color: var(--muted);
-  font-weight: 700;
+  align-items:center;
+  gap:10px;
 }
 
+/* top links centered */
 .links{
   display:flex;
   gap:10px;
   flex-wrap:wrap;
   align-items:center;
   justify-content:center;
+  width:100%;
 }
 
+/* glow sequence buttons */
 .aLink{
   display:inline-flex;
   align-items:center;
   gap:8px;
-  padding:10px 12px;
+  padding:10px 14px;
   border-radius: 999px;
   border: 1px solid var(--line);
-  background: rgba(255,255,255,.55);
+  background: rgba(255,255,255,.62);
   color: var(--ink);
   text-decoration:none;
-  font-weight:800;
-  font-size: 13px;
-  box-shadow: 0 10px 24px rgba(0,0,0,.10);
-  transition: transform .12s ease, background .12s ease, box-shadow .12s ease;
+  font-weight:900;
+  font-size: 13.5px;
   white-space:nowrap;
+  box-shadow: 0 10px 24px rgba(0,0,0,.10);
+  position:relative;
+  overflow:hidden;
+  transform: translateZ(0);
 }
-.aLink:hover{
-  transform: translateY(-1px);
-  background: rgba(255,255,255,.72);
-  box-shadow: 0 16px 30px rgba(0,0,0,.14);
-}
-.aLink:active{transform: translateY(0px)}
 
+.aLink:before{
+  content:"";
+  position:absolute; inset:-60px;
+  background:
+    radial-gradient(200px 140px at 35% 35%, rgba(255,255,255,.80), rgba(255,255,255,0) 65%),
+    radial-gradient(220px 160px at 70% 60%, rgba(255,220,120,.65), rgba(255,255,255,0) 70%);
+  opacity:.35;
+  filter: blur(1px);
+  pointer-events:none;
+}
+
+.aLink:hover{ transform: translateY(-1px); background: rgba(255,255,255,.78); }
+.aLink:active{ transform: translateY(0px); }
+
+@keyframes glowPulseA{
+  0%,100%{ box-shadow: 0 10px 24px rgba(0,0,0,.10), 0 0 0 rgba(255,214,120,0); }
+  50%{ box-shadow: 0 16px 34px rgba(0,0,0,.14), 0 0 26px rgba(255,214,120,.85); }
+}
+@keyframes glowPulseB{
+  0%,100%{ box-shadow: 0 10px 24px rgba(0,0,0,.10), 0 0 0 rgba(94,230,255,0); }
+  50%{ box-shadow: 0 16px 34px rgba(0,0,0,.14), 0 0 26px rgba(94,230,255,.78); }
+}
+@keyframes glowPulseC{
+  0%,100%{ box-shadow: 0 10px 24px rgba(0,0,0,.10), 0 0 0 rgba(255,126,185,0); }
+  50%{ box-shadow: 0 16px 34px rgba(0,0,0,.14), 0 0 26px rgba(255,126,185,.72); }
+}
+.aLink.g1{ animation: glowPulseA 3.2s ease-in-out infinite; animation-delay: .0s; }
+.aLink.g2{ animation: glowPulseB 3.2s ease-in-out infinite; animation-delay: 1.05s; }
+.aLink.g3{ animation: glowPulseC 3.2s ease-in-out infinite; animation-delay: 2.1s; }
+
+/* EN/JP toggle centered under links (no glow) */
 .langToggle{
   display:flex;
   gap:8px;
   align-items:center;
-  justify-content:flex-end;
-  flex: 1 1 auto;
-  min-width: 220px;
+  justify-content:center;
+  width:100%;
 }
 
 .langBtn{
   border:1px solid var(--line);
-  background: rgba(255,255,255,.55);
+  background: rgba(255,255,255,.62);
   color: var(--ink);
   font-weight:900;
   padding:10px 12px;
@@ -128,14 +142,15 @@ body{
 }
 .langBtn:hover{
   transform: translateY(-1px);
-  background: rgba(255,255,255,.72);
+  background: rgba(255,255,255,.78);
   box-shadow: 0 16px 30px rgba(0,0,0,.14);
 }
 .langBtn.active{
-  background: rgba(255,255,255,.90);
+  background: rgba(255,255,255,.92);
   border-color: rgba(0,0,0,.22);
 }
 
+/* ===== Hero ===== */
 .hero{
   margin: 16px 0 14px;
   background: var(--glass2);
@@ -144,18 +159,19 @@ body{
   box-shadow: var(--shadow);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  padding: 18px 18px;
+  padding: 22px 18px;
   position:relative;
   overflow:hidden;
+  text-align:center;
 }
 
 .hero:before{
   content:"";
   position:absolute; inset:-40px;
   background:
-    radial-gradient(220px 160px at 18% 40%, var(--spark), rgba(255,255,255,0) 65%),
-    radial-gradient(240px 180px at 78% 30%, var(--spark2), rgba(255,255,255,0) 70%),
-    radial-gradient(220px 180px at 62% 78%, var(--spark3), rgba(255,255,255,0) 70%);
+    radial-gradient(240px 180px at 20% 35%, var(--spark), rgba(255,255,255,0) 65%),
+    radial-gradient(260px 200px at 80% 30%, var(--spark2), rgba(255,255,255,0) 70%),
+    radial-gradient(240px 200px at 60% 85%, var(--spark3), rgba(255,255,255,0) 70%);
   filter: blur(1px);
   opacity:.55;
   pointer-events:none;
@@ -163,19 +179,24 @@ body{
 
 .heroInner{position:relative}
 .hero h1{
-  margin:0 0 8px;
+  margin:0 0 10px;
   font-family:"Cinzel", serif;
   font-weight: 900;
   letter-spacing:.6px;
-  font-size: clamp(22px, 3.2vw, 34px);
+  font-size: clamp(24px, 3.4vw, 38px);
+}
+.jpTitle{
+  font-family:"Noto Sans JP", system-ui, sans-serif !important;
+  letter-spacing:.2px !important;
 }
 .hero p{
   margin:0;
   font-size: 14.5px;
-  font-weight: 800;
+  font-weight: 900;
   color: #1a1a1a;
 }
 
+/* ===== Accordion ===== */
 .accordion{
   background: var(--glass);
   border: 1px solid var(--line);
@@ -186,10 +207,8 @@ body{
   overflow:hidden;
 }
 
-.item{
-  border-top: 1px solid var(--line);
-}
-.item:first-child{border-top:none}
+.item{ border-top: 1px solid var(--line); }
+.item:first-child{ border-top:none; }
 
 .btn{
   width:100%;
@@ -202,12 +221,42 @@ body{
   align-items:center;
   justify-content:space-between;
   gap:14px;
+  position:relative;
+  overflow:hidden;
+}
+
+.btn:before{
+  content:"";
+  position:absolute;
+  inset:-60px;
+  opacity:0;
+  background:
+    radial-gradient(240px 180px at 30% 50%, rgba(255,220,120,.75), rgba(255,255,255,0) 68%),
+    radial-gradient(260px 200px at 75% 40%, rgba(160,235,255,.60), rgba(255,255,255,0) 72%),
+    radial-gradient(260px 200px at 55% 80%, rgba(255,170,210,.55), rgba(255,255,255,0) 72%);
+  filter: blur(1px);
+  pointer-events:none;
+  transition: opacity .2s ease;
+}
+
+/* sparkle when opened */
+@keyframes tabSparkle{
+  0%{ opacity:0; transform: translateY(8px) scale(1.02); }
+  30%{ opacity:.9; }
+  100%{ opacity:0; transform: translateY(-10px) scale(1.06); }
+}
+
+.item.open .btn:before{
+  opacity:.85;
+  animation: tabSparkle 650ms ease-out 1;
 }
 
 .btn .label{
   display:flex;
   flex-direction:column;
   gap:2px;
+  position:relative;
+  z-index:1;
 }
 
 .btn .label .t{
@@ -231,16 +280,18 @@ body{
   height: 34px;
   border-radius: 999px;
   border: 1px solid var(--line);
-  background: rgba(255,255,255,.55);
+  background: rgba(255,255,255,.60);
   display:grid;
   place-items:center;
   flex:0 0 auto;
   box-shadow: 0 10px 22px rgba(0,0,0,.10);
   transition: transform .16s ease, background .16s ease;
+  position:relative;
+  z-index:1;
 }
 .item.open .chev{
   transform: rotate(45deg);
-  background: rgba(255,255,255,.85);
+  background: rgba(255,255,255,.90);
 }
 .chev:before{
   content:"+";
@@ -249,25 +300,22 @@ body{
   line-height: 1;
 }
 
-.panel{
-  display:none;
-  padding: 0 18px 18px 18px;
-}
-.item.open .panel{display:block}
+.panel{ display:none; padding: 0 18px 18px 18px; }
+.item.open .panel{ display:block; }
 
 .text{
-  background: rgba(255,255,255,.62);
+  background: rgba(255,255,255,.66);
   border: 1px solid rgba(0,0,0,.10);
   border-radius: var(--radius2);
   padding: 16px 16px;
-  line-height: 1.82;
-  font-weight: 700;
+  line-height: 1.86;
+  font-weight: 750;
   color: #121212;
   box-shadow: 0 12px 26px rgba(0,0,0,.10);
 }
 
 .text .lead{
-  font-weight: 900;
+  font-weight: 950;
   font-family:"Cinzel", serif;
   letter-spacing:.2px;
 }
@@ -285,39 +333,88 @@ body{
 }
 
 .hidden{display:none !important}
+
+/* ===== Footer ===== */
+.footer{
+  margin-top: 18px;
+  text-align:center;
+  font-size: 12.5px;
+  font-weight: 900;
+  color: rgba(0,0,0,.78);
+  padding: 18px 10px 0;
+  text-shadow: 0 2px 0 rgba(255,255,255,.65);
+}
+
+/* ===== BoohaYellow Ghost Flyby ===== */
+.ghost{
+  position: fixed;
+  left: -160px;
+  top: 20vh;
+  width: 120px;
+  height: auto;
+  pointer-events:none;
+  z-index: 50;
+  opacity: 0;
+  filter: drop-shadow(0 14px 18px rgba(0,0,0,.25));
+  will-change: transform, opacity;
+}
+
+.trail{
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  pointer-events:none;
+  z-index: 49;
+  opacity: .95;
+  filter: blur(.2px);
+  will-change: transform, opacity;
+}
+
+@keyframes trailFade{
+  from{ opacity:.95; transform: scale(1); }
+  to{ opacity:0; transform: scale(.35); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .aLink{ animation: none !important; }
+  .ghost{ display:none !important; }
+}
 </style>
 </head>
 
 <body>
+
+<img class="ghost" id="boohaGhost" src="BoohaYellow.png" alt="" />
+
 <div class="wrap">
 
   <div class="topbar" role="navigation" aria-label="Booha links and language toggle">
-    <div class="brand">
-      <div class="title">Welcome to the Booha Adventure</div>
-      <div class="sub" id="subTitle">A message for Booha Adventure students</div>
-    </div>
+    <div class="topStack">
 
-    <div class="links">
-      <a class="aLink" href="https://www.bryanharper.tokyo/booha-gate" target="_blank" rel="noopener">Booha Gate</a>
-      <a class="aLink" href="https://booha-adventure-studios.github.io/booha-system-and-prices-2026/" target="_blank" rel="noopener">Booha System & Prices</a>
-      <a class="aLink" href="https://booha-adventure-studios.github.io/Booha-adventure-and-boo-riculum/" target="_blank" rel="noopener">Booha Adventure & Boo-riculum</a>
-    </div>
+      <div class="links" aria-label="Top links">
+        <a class="aLink g1" id="linkGate" href="https://www.bryanharper.tokyo/booha-gate" target="_blank" rel="noopener">Enter Booha</a>
+        <a class="aLink g2" id="linkPrices" href="https://booha-adventure-studios.github.io/booha-system-and-prices-2026/" target="_blank" rel="noopener">2026 Prices</a>
+        <a class="aLink g3" id="linkBooR" href="https://booha-adventure-studios.github.io/Booha-adventure-and-boo-riculum/" target="_blank" rel="noopener">Booha Adventure & Boo-riculum</a>
+      </div>
 
-    <div class="langToggle" aria-label="Language toggle">
-      <button class="langBtn active" id="btnEN" type="button">English</button>
-      <button class="langBtn" id="btnJP" type="button">日本語</button>
+      <div class="langToggle" aria-label="Language toggle">
+        <button class="langBtn" id="btnEN" type="button">English</button>
+        <button class="langBtn active" id="btnJP" type="button">日本語</button>
+      </div>
+
     </div>
   </div>
 
   <div class="hero" aria-label="Intro">
     <div class="heroInner">
-      <h1 id="heroTitle">Welcome to the Booha Adventure</h1>
-      <p id="heroLine">This is my page to talk to you directly inside the Booha world.</p>
+      <h1 id="heroTitle" class="jpTitle">ブーハー・アドベンチャーへようこそ</h1>
+      <p id="heroLine">ここは、ブーハーの世界の中で、私が生徒に直接話すページです。</p>
     </div>
   </div>
 
   <!-- EN ACCORDION -->
-  <section class="accordion en" id="accEN" aria-label="Accordion English">
+  <section class="accordion en hidden" id="accEN" aria-label="Accordion English">
     <div class="item open">
       <button class="btn" type="button" aria-expanded="true">
         <div class="label">
@@ -350,7 +447,7 @@ body{
       <div class="panel">
         <div class="text">
           The study decks are the foundation of everything in the Booha Adventure. Nothing else works properly without them.
-          Every week, the study decks always contain the same three types of cards: vocabulary cards, sentence cards, and question cards, and they are all full audio.
+          Every week, the study decks always contain vocabulary cards, sentence cards, and question cards, and they are all full audio.
           The vocabulary cards train your ear and your eyes to recognize the week’s core words quickly. The sentence cards show how those words actually live inside real English, so you don’t memorize isolated pieces.
           The question cards prepare you to react and answer without freezing, because you’ve already met the language in a calm way before the games ask you to use it.
           These decks are not meant to be finished once. They are meant to be visited often until the English starts to feel familiar.
@@ -416,7 +513,7 @@ body{
   </section>
 
   <!-- JP ACCORDION -->
-  <section class="accordion jp hidden" id="accJP" aria-label="Accordion Japanese">
+  <section class="accordion jp" id="accJP" aria-label="Accordion Japanese">
     <div class="item open">
       <button class="btn" type="button" aria-expanded="true">
         <div class="label">
@@ -505,7 +602,7 @@ body{
         <div class="chev" aria-hidden="true"></div>
       </button>
       <div class="panel">
-        <div class="text">
+        <div class="text" id="updatesBox">
           ここはブーハーの「生きている場所」です。ゲームの追加、仕組みの変更、バグの修正などは、ここに書きます。
           もし何かおかしい、分かりにくい、もっと良くできそう、と思ったら、学校にメールしてください。埋もれないようにするためです。
           <div class="smallNote">この欄は、ブーハーの成長に合わせて更新します。</div>
@@ -513,6 +610,10 @@ body{
       </div>
     </div>
   </section>
+
+  <div class="footer" id="footerText">
+    © Bryan Harper’s English School — ブライアン英会話教室
+  </div>
 
 </div>
 
@@ -524,7 +625,9 @@ body{
   const btnJP = document.getElementById('btnJP');
   const heroTitle = document.getElementById('heroTitle');
   const heroLine  = document.getElementById('heroLine');
-  const subTitle  = document.getElementById('subTitle');
+  const linkGate  = document.getElementById('linkGate');
+  const linkPrices= document.getElementById('linkPrices');
+  const linkBooR  = document.getElementById('linkBooR');
 
   function setLang(lang){
     const isJP = (lang === 'jp');
@@ -535,15 +638,25 @@ body{
     btnJP.classList.toggle('active', isJP);
 
     if(isJP){
-      heroTitle.textContent = 'ブーハー・アドベンチャーへようこそ';
-      heroLine.textContent  = 'ここは、ブーハーの世界の中で、私が生徒に直接話すページです。';
-      subTitle.textContent  = 'ブーハー・アドベンチャーの生徒へ';
       document.documentElement.lang = 'ja';
+      heroTitle.textContent = 'ブーハー・アドベンチャーへようこそ';
+      heroTitle.classList.add('jpTitle');
+      heroLine.textContent  = 'ここは、ブーハーの世界の中で、私が生徒に直接話すページです。';
+
+      // translate top buttons (JP default)
+      linkGate.textContent   = 'ブーハーに入る';
+      linkPrices.textContent = '2026 料金';
+      linkBooR.textContent   = 'ブーハー・アドベンチャー＆ブーリキュラム';
     }else{
-      heroTitle.textContent = 'Welcome to the Booha Adventure';
-      heroLine.textContent  = 'This is my page to talk to you directly inside the Booha world.';
-      subTitle.textContent  = 'A message for Booha Adventure students';
       document.documentElement.lang = 'en';
+      heroTitle.textContent = 'Welcome to the Booha Adventure';
+      heroTitle.classList.remove('jpTitle');
+      heroLine.textContent  = 'This is my page to talk to you directly inside the Booha world.';
+
+      // translate top buttons (EN)
+      linkGate.textContent   = 'Enter Booha';
+      linkPrices.textContent = '2026 Prices';
+      linkBooR.textContent   = 'Booha Adventure & Boo-riculum';
     }
   }
 
@@ -563,8 +676,107 @@ body{
   btnEN.addEventListener('click', ()=>setLang('en'));
   btnJP.addEventListener('click', ()=>setLang('jp'));
 
-  // Default: EN
-  setLang('en');
+  // Default: JP
+  setLang('jp');
+
+  /* ========= BoohaYellow Ghost Flyby =========
+     Randomly flies across the page, leaving a glitter trail.
+  */
+  const ghost = document.getElementById('boohaGhost');
+
+  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!prefersReduced && ghost){
+    let flying = false;
+
+    function rand(min,max){ return Math.random()*(max-min)+min; }
+
+    function spawnTrail(x,y){
+      const d = document.createElement('div');
+      d.className = 'trail';
+
+      // random sparkle tone (no emojis)
+      const tones = [
+        'rgba(255,214,120,.95)',
+        'rgba(94,230,255,.85)',
+        'rgba(255,126,185,.80)',
+        'rgba(200,160,255,.78)',
+        'rgba(255,255,255,.85)'
+      ];
+      d.style.background = tones[(Math.random()*tones.length)|0];
+      d.style.left = (x + rand(-8,8)) + 'px';
+      d.style.top  = (y + rand(-8,8)) + 'px';
+      d.style.width = rand(6,12) + 'px';
+      d.style.height= d.style.width;
+      d.style.boxShadow = '0 0 18px rgba(255,255,255,.55), 0 0 26px ' + d.style.background;
+
+      d.style.animation = 'trailFade ' + rand(650,980) + 'ms ease-out forwards';
+      document.body.appendChild(d);
+      setTimeout(()=>d.remove(), 1100);
+    }
+
+    function flyOnce(){
+      if(flying) return;
+      flying = true;
+
+      const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+      const vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+
+      const fromLeft = Math.random() < 0.5;
+      const startX = fromLeft ? -160 : (vw + 160);
+      const endX   = fromLeft ? (vw + 160) : -160;
+
+      const y = rand(vh*0.12, vh*0.70);
+      const dur = rand(5200, 8200);
+
+      const wobble = rand(10, 22);
+      const rot = rand(-12, 12);
+
+      ghost.style.opacity = '0';
+      ghost.style.transform = 'translate3d(' + startX + 'px,' + y + 'px,0) rotate(' + rot + 'deg)';
+      ghost.style.transition = 'none';
+
+      // start
+      requestAnimationFrame(()=>{
+        ghost.style.opacity = '1';
+        ghost.style.transition = 'transform ' + dur + 'ms ease-in-out, opacity 700ms ease';
+        ghost.style.transform = 'translate3d(' + endX + 'px,' + y + 'px,0) rotate(' + (-rot) + 'deg)';
+      });
+
+      // trail timer
+      const t0 = performance.now();
+      const trailTimer = setInterval(()=>{
+        const now = performance.now();
+        const p = Math.min(1, (now - t0) / dur);
+        const x = startX + (endX - startX) * p;
+        const yy = y + Math.sin(p * Math.PI * 2) * wobble;
+        spawnTrail(x + 60, yy + 60);
+      }, 90);
+
+      // end
+      setTimeout(()=>{
+        clearInterval(trailTimer);
+        ghost.style.opacity = '0';
+        setTimeout(()=>{
+          flying = false;
+          // next random flight
+          scheduleNext();
+        }, 900);
+      }, dur + 150);
+    }
+
+    function scheduleNext(){
+      const wait = rand(6000, 14000);
+      setTimeout(()=>{
+        // sometimes skip to keep it magical, not constant
+        if(Math.random() < 0.85) flyOnce();
+        else scheduleNext();
+      }, wait);
+    }
+
+    // first flight after short delay
+    setTimeout(()=>flyOnce(), 2200);
+  }
+
 })();
 </script>
 </body>
