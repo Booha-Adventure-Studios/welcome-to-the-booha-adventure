@@ -690,136 +690,144 @@ body{
   btnJP.addEventListener('click', ()=>setLang('jp'));
   setLang('jp');
 
-  // ===== Booha: RANDOM WANDER + ATTACHED ROCKET TRAIL (no reacting) =====
-  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const fx = document.getElementById('fxLayer');
-  const ghost = document.getElementById('boohaGhost');
+ // ===== Booha: HORIZONTAL FLY-BY + ATTACHED ROCKET TRAIL (no reacting) =====
+const prefersReduced =
+  window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fx = document.getElementById('fxLayer');
+const ghost = document.getElementById('boohaGhost');
 
-  if(!prefersReduced && fx && ghost){
-    // movement state
-    let x = 60, y = 120;
-    let tx = 260, ty = 220;
-    let vx = 0, vy = 0;
-    let lastT = performance.now();
-    let lastEmit = 0;
+if (!prefersReduced && fx && ghost) {
+  // movement state
+  let x = 0, y = 140;
+  let tx = 0;
+  let vx = 0;
 
-    // show
-    ghost.style.opacity = '1';
+  let lastT = performance.now();
+  let lastEmit = 0;
 
-    const rand = (a,b)=>Math.random()*(b-a)+a;
-    const clamp = (v,a,b)=>Math.max(a, Math.min(b,v));
+  ghost.style.opacity = '1';
 
-    function pickTarget(){
-      const vw = innerWidth;
-      const vh = innerHeight;
+  const rand = (a, b) => Math.random() * (b - a) + a;
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
-      // keep Booha away from the edges and the Safari bars
-      const marginX = 70;
-      const marginTop = 70;
-      const marginBottom = 120;
+  // Choose a new horizontal "pass":
+  // start off-screen on one side, target off-screen on the other.
+  // Y only changes between passes (so no up/down during flight).
+  function newPass() {
+    const vw = innerWidth;
+    const vh = innerHeight;
 
-      tx = rand(marginX, Math.max(marginX+1, vw - marginX));
-      ty = rand(marginTop, Math.max(marginTop+1, vh - marginBottom));
+    const off = 220;              // how far off-screen Booha can go
+    const marginTop = 90;
+    const marginBottom = 140;
+
+    // pick a calm lane (only changes between passes)
+    y = rand(marginTop, Math.max(marginTop + 1, vh - marginBottom));
+
+    const fromLeft = Math.random() < 0.5;
+
+    // place Booha fully off-screen
+    x = fromLeft ? -off : (vw + off);
+    tx = fromLeft ? (vw + off) : -off;
+
+    // reset velocity so it eases into motion cleanly
+    vx = fromLeft ? 10 : -10;
+
+    ghost.style.transform = `translate(${x}px, ${y}px)`;
+  }
+
+  function spawnTrail(px, py, angleDeg, speed) {
+    const d = document.createElement('div');
+    d.className = 'trail';
+
+    // speed -> taper (still works, but tuned for slower motion)
+    const sp = clamp(speed, 40, 420);
+    const t = (sp - 40) / (420 - 40); // 0..1
+
+    // longer trail even when slow (your request)
+    const w = 22 + t * 28; // length
+    const h = 6 + t * 5;   // thickness
+    d.style.width = w + 'px';
+    d.style.height = h + 'px';
+
+    d.style.left = px + 'px';
+    d.style.top  = py + 'px';
+
+    // rotate along travel direction (pointing backward)
+    d.style.transform = `rotate(${angleDeg}deg) translateX(-6px)`;
+
+    // slower ghost = slightly longer fade so the trail feels persistent
+    const dur = Math.round(780 - t * 140);
+    d.style.animation = `rocketFade ${dur}ms linear forwards`;
+
+    fx.appendChild(d);
+    setTimeout(() => d.remove(), dur + 80);
+  }
+
+  // Start with a pass
+  newPass();
+
+  function loop(now) {
+    const dt = Math.min(0.05, (now - lastT) / 1000);
+    lastT = now;
+
+    // horizontal-only steering (no dy)
+    const dx = tx - x;
+    const dist = Math.abs(dx) || 0.001;
+    const dir = dx >= 0 ? 1 : -1;
+
+    // slower speed profile (the actual "ghost speed")
+    const desiredSpeed = 70 + Math.min(80, dist * 0.06); // px/s (slow)
+    const desiredVx = dir * desiredSpeed;
+
+    // smooth ease toward desired velocity
+    const k = 2.0; // responsiveness (lower = smoother)
+    vx += (desiredVx - vx) * k * dt;
+
+    // integrate
+    const prevX = x;
+    x += vx * dt;
+
+    // apply transform
+    ghost.style.transform = `translate(${x}px, ${y}px)`;
+
+    // if Booha reached target (off-screen), start a new pass
+    if ((dir > 0 && x >= tx) || (dir < 0 && x <= tx)) {
+      newPass();
     }
 
-    function spawnTrail(px, py, angleDeg, speed){
-      const d = document.createElement('div');
-      d.className = 'trail';
+    // TRAIL: attach to the back of the PNG (direction-aware)
+    const r = ghost.getBoundingClientRect();
 
-      // speed -> taper
-      const sp = clamp(speed, 80, 900);
-      const t = (sp - 80) / (900 - 80); // 0..1
+    const mdx = x - prevX;
+    const sp = Math.abs(mdx) / Math.max(dt, 0.0001); // px/s
+    const angle = (mdx >= 0) ? 0 : 180;              // right=0, left=180
 
-      // rocket streak size
-      const w = 10 + t*16; // length
-      const h = 5 + t*5;   // thickness
-      d.style.width = w + 'px';
-      d.style.height = h + 'px';
+    // emitter point: behind the ghost depending on direction
+    const emitX = (mdx >= 0)
+      ? (r.left + r.width * 0.12)    // moving right => emit from left/back
+      : (r.left + r.width * 0.88);   // moving left  => emit from right/back
+    const emitY = r.top + r.height * 0.72;
 
-      // placement
-      d.style.left = px + 'px';
-      d.style.top  = py + 'px';
+    // emission rate: fewer particles for slower motion (cleaner)
+    const interval = clamp(34 - (sp / 28), 16, 34); // ms
+    if (now - lastEmit > interval) {
+      lastEmit = now;
 
-      // rotate along travel direction (pointing backward)
-      d.style.transform = `rotate(${angleDeg}deg) translateX(-6px)`;
-
-      // fade time (fast = slightly shorter)
-      const dur = Math.round(640 - t*160);
-      d.style.animation = `rocketFade ${dur}ms linear forwards`;
-
-      fx.appendChild(d);
-      setTimeout(()=>d.remove(), dur + 60);
-    }
-
-    // initialize near a corner, then start wandering
-    pickTarget();
-
-    function loop(now){
-      const dt = Math.min(0.05, (now - lastT)/1000); // cap dt
-      lastT = now;
-
-      // arrive check
-      const dx = tx - x;
-      const dy = ty - y;
-      const dist = Math.sqrt(dx*dx + dy*dy) || 0.001;
-
-      // smooth steering: accelerate toward target, with damping
-      const desiredSpeed = 160 + Math.min(220, dist * 0.35); // px/s
-      const ax = (dx/dist) * desiredSpeed;
-      const ay = (dy/dist) * desiredSpeed;
-
-      // ease velocity toward desired
-      const k = 3.2; // responsiveness
-      vx += (ax - vx) * k * dt;
-      vy += (ay - vy) * k * dt;
-
-      // integrate
-      const px0 = x, py0 = y;
-      x += vx * dt;
-      y += vy * dt;
-
-      // if very close, pick new target (random wander)
-      if(dist < 24){
-        pickTarget();
-      }
-
-      // apply transform
-      ghost.style.transform = `translate(${x}px, ${y}px)`;
-
-      // trail: attach to ghost PNG via bounding box
-      // (this keeps it glued to the visible art)
-      const r = ghost.getBoundingClientRect();
-
-      // compute travel angle from movement
-      const mdx = x - px0;
-      const mdy = y - py0;
-      const sp = Math.sqrt(mdx*mdx + mdy*mdy) / Math.max(dt, 0.0001); // px/s
-      const angle = Math.atan2(mdy, mdx) * 180 / Math.PI;
-
-      // behind-the-ghost emitter point
-      // (tuned: left-ish + lower belly, so it feels like a rocket)
-      const emitX = r.left + r.width * 0.18;
-      const emitY = r.top  + r.height * 0.72;
-
-      // emission rate based on speed
-      const interval = clamp(28 - (sp/60), 14, 28); // ms
-      if(now - lastEmit > interval){
-        lastEmit = now;
-
-        // jitter so it looks like glitter, not a perfect line
-        spawnTrail(
-          emitX + rand(-7, 7),
-          emitY + rand(-6, 6),
-          angle + 180 + rand(-10, 10),
-          sp
-        );
-      }
-
-      requestAnimationFrame(loop);
+      spawnTrail(
+        emitX + rand(-6, 6),
+        emitY + rand(-5, 5),
+        angle + 180 + rand(-8, 8),
+        sp
+      );
     }
 
     requestAnimationFrame(loop);
   }
+
+  requestAnimationFrame(loop);
+}
+
 })();
 </script>
 </body>
