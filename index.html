@@ -70,26 +70,49 @@ body{
   width:100%;
 }
 
-/* glow sequence buttons */
+/* glow sequence buttons – smaller & colorful */
 .aLink{
   display:inline-flex;
   align-items:center;
-  gap:8px;
-  padding:10px 14px;
+  gap:6px;
+  padding:7px 12px;              /* smaller */
   border-radius: 999px;
-  border: 1px solid var(--line);
-  background: rgba(255,255,255,.62);
-  color: var(--ink);
+  border: 1px solid rgba(0,0,0,.12);
+  background: linear-gradient(
+    135deg,
+    rgba(255,245,210,.85),
+    rgba(255,255,255,.75)
+  );
+  color:#1a1a1a;
   text-decoration:none;
   font-weight:900;
-  font-size: 13.5px;
+  font-size: 12.5px;             /* smaller text */
+  letter-spacing:.2px;
   white-space:nowrap;
-  box-shadow: 0 10px 24px rgba(0,0,0,.10);
+
+  box-shadow:
+    0 6px 14px rgba(0,0,0,.12),
+    inset 0 1px 0 rgba(255,255,255,.85);
+
   position:relative;
   overflow:hidden;
   transform: translateZ(0);
 }
 
+.aLink:before{
+  content:"";
+  position:absolute;
+  inset:-60px;
+  background:
+    radial-gradient(120px 90px at 30% 40%, rgba(255,214,120,.75), rgba(255,255,255,0) 70%),
+    radial-gradient(140px 110px at 70% 60%, rgba(160,235,255,.65), rgba(255,255,255,0) 72%),
+    radial-gradient(120px 100px at 50% 80%, rgba(255,170,210,.55), rgba(255,255,255,0) 72%);
+  opacity:.45;
+  filter: blur(.6px);
+  pointer-events:none;
+}
+
+  
 .aLink:before{
   content:"";
   position:absolute; inset:-60px;
@@ -372,9 +395,11 @@ body{
 }
 
 @keyframes trailFade{
-  from{ opacity:.95; transform: scale(1); }
-  to{ opacity:0; transform: scale(.35); }
+  0%   { opacity:.95; transform: scale(1); }
+  70%  { opacity:.55; transform: scale(.85); }
+  100% { opacity:0;   transform: scale(.25); }
 }
+
 
 @media (prefers-reduced-motion: reduce){
   .aLink{ animation: none !important; }
@@ -612,7 +637,7 @@ body{
   </section>
 
   <div class="footer" id="footerText">
-    © Bryan Harper’s English School — ブライアン英会話教室
+    © Bryan's English School
   </div>
 
 </div>
@@ -696,23 +721,25 @@ body{
 
       // random sparkle tone (no emojis)
       const tones = [
-        'rgba(255,214,120,.95)',
-        'rgba(94,230,255,.85)',
-        'rgba(255,126,185,.80)',
-        'rgba(200,160,255,.78)',
-        'rgba(255,255,255,.85)'
-      ];
+  'rgba(255,214,120,.98)',  // warm gold
+  'rgba(255,231,160,.95)',  // pale gold
+  'rgba(255,200,90,.95)',   // rich gold
+  'rgba(255,245,205,.92)',  // champagne sparkle
+  'rgba(255,170,55,.92)'    // amber gold
+];
+
       d.style.background = tones[(Math.random()*tones.length)|0];
       d.style.left = (x + rand(-8,8)) + 'px';
       d.style.top  = (y + rand(-8,8)) + 'px';
       d.style.width = rand(6,12) + 'px';
       d.style.height= d.style.width;
-      d.style.boxShadow = '0 0 18px rgba(255,255,255,.55), 0 0 26px ' + d.style.background;
+   d.style.boxShadow =
+  '0 0 10px rgba(255,215,120,.55), ' +
+  '0 0 22px rgba(255,200,90,.75), ' +
+  '0 0 36px ' + d.style.background;
+    d.style.animation = 'trailFade ' + rand(1400,2200) + 'ms ease-out forwards';
+setTimeout(()=>d.remove(), 2600);
 
-      d.style.animation = 'trailFade ' + rand(650,980) + 'ms ease-out forwards';
-      document.body.appendChild(d);
-      setTimeout(()=>d.remove(), 1100);
-    }
 
     function flyOnce(){
       if(flying) return;
