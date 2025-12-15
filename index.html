@@ -736,33 +736,75 @@ if (!prefersReduced && fx && ghost) {
     ghost.style.transform = `translate(${x}px, ${y}px)`;
   }
 
-  function spawnTrail(px, py, angleDeg, speed) {
-    const d = document.createElement('div');
-    d.className = 'trail';
+ function spawnTrail(px, py, angleDeg, speed) {
+  const d = document.createElement('div');
+  d.className = 'trail';
 
-    // speed -> taper (still works, but tuned for slower motion)
-    const sp = clamp(speed, 40, 420);
-    const t = (sp - 40) / (420 - 40); // 0..1
+  // speed → taper
+  const sp = clamp(speed, 40, 420);
+  const t = (sp - 40) / (420 - 40); // 0..1
 
-    // longer trail even when slow (your request)
-    const w = 22 + t * 28; // length
-    const h = 6 + t * 5;   // thickness
-    d.style.width = w + 'px';
-    d.style.height = h + 'px';
+  // base size (longer even when slow)
+  const w = 22 + t * 28;
+  const h = 6 + t * 5;
+  d.style.width  = w + 'px';
+  d.style.height = h + 'px';
 
-    d.style.left = px + 'px';
-    d.style.top  = py + 'px';
+  d.style.left = px + 'px';
+  d.style.top  = py + 'px';
 
-    // rotate along travel direction (pointing backward)
-    d.style.transform = `rotate(${angleDeg}deg) translateX(-6px)`;
+  // ✨ MAGIC MOTION PARAMETERS
+  const drift = rand(-10, 10);          // sideways float
+  const lift  = rand(-8, -18);          // gentle upward rise
+  const curl  = rand(-14, 14);          // slight swirl
+  const fadeDur = 760 + t * 240;         // slower, floatier fade
 
-    // slower ghost = slightly longer fade so the trail feels persistent
-    const dur = Math.round(780 - t * 140);
-    d.style.animation = `rocketFade ${dur}ms linear forwards`;
+  // subtle color variation (gold → warm white)
+  const glow = 0.55 + t * 0.45;
+  d.style.boxShadow = `
+    0 0 ${14 + t * 18}px rgba(255,215,120,${glow}),
+    0 0 ${28 + t * 26}px rgba(255,235,180,${0.35 + t * 0.35})
+  `;
 
-    fx.appendChild(d);
-    setTimeout(() => d.remove(), dur + 80);
-  }
+  // initial orientation (pointing backward)
+  d.style.transform = `
+    rotate(${angleDeg}deg)
+    translateX(-6px)
+  `;
+
+  // ✨ FLOAT + CURL animation (inline, per-particle)
+  d.animate(
+    [
+      {
+        opacity: 1,
+        transform: `
+          rotate(${angleDeg}deg)
+          translateX(-6px)
+          translate(0px, 0px)
+          scale(1)
+        `
+      },
+      {
+        opacity: 0,
+        transform: `
+          rotate(${angleDeg + curl}deg)
+          translateX(-6px)
+          translate(${drift}px, ${lift}px)
+          scale(0.25)
+        `
+      }
+    ],
+    {
+      duration: fadeDur,
+      easing: 'cubic-bezier(.22,.61,.36,1)',
+      fill: 'forwards'
+    }
+  );
+
+  fx.appendChild(d);
+  setTimeout(() => d.remove(), fadeDur + 80);
+}
+
 
   // Start with a pass
   newPass();
