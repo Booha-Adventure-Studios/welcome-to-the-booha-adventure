@@ -367,29 +367,41 @@ body{
   will-change: transform, opacity;
 }
 
-/* small sparkly glitter behind ghost */
+/* ===== Booha Rocket Trail (REPLACE OLD .trail + trailFade + media block) ===== */
 .trail{
   position: fixed;
-  width: 7px;
-  height: 7px;
+  width: 10px;
+  height: 6px;                 /* a little “streak” shape */
   border-radius: 999px;
   pointer-events:none;
-  z-index: 49;
-  opacity: .95;
+  z-index: 49;                 /* behind ghost (ghost is 50) */
+  opacity: 1;
+  background: radial-gradient(circle at 30% 50%,
+    rgba(255,255,255,1),
+    rgba(255,215,120,.95),
+    rgba(255,180,80,.55)
+  );
+  box-shadow:
+    0 0 10px rgba(255,215,120,.95),
+    0 0 22px rgba(255,200,120,.65),
+    0 0 34px rgba(255,235,170,.35);
   filter: blur(.15px);
+  transform-origin: center;
   will-change: transform, opacity;
 }
 
-@keyframes trailFade{
-  0%   { opacity:.95; transform: scale(1); }
-  70%  { opacity:.55; transform: scale(.85); }
-  100% { opacity:0;   transform: scale(.25); }
+@keyframes rocketFade{
+  0%   { opacity:1; transform: scale(1.1); }
+  100% { opacity:0; transform: scale(.25); }
 }
 
+/* Keep your reduced-motion behavior, but also disable the trail */
 @media (prefers-reduced-motion: reduce){
   .aLink{ animation: none !important; }
   .ghost{ display:none !important; }
+  .trail{ display:none !important; }
 }
+
 </style>
 </head>
 
@@ -737,42 +749,80 @@ body{
   // Default: JP
   setLang('jp');
 
-  /* ========= BoohaYellow Ghost Flyby + glitter trail ========= */
-  const ghost = document.getElementById('boohaGhost');
-  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ /* ========= Booha Ghost Rocket Flyby ========= */
+const ghost = document.getElementById('boohaGhost');
+const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if(!prefersReduced && ghost){
-    let flying = false;
+if(!prefersReduced && ghost){
+  let flying = false;
+  let lastX = 0, lastY = 0;
 
-    function spawnTrail(x,y){
-      const d = document.createElement('div');
-      d.className = 'trail';
+  function emitTrail(x, y, angle){
+    const d = document.createElement('div');
+    d.className = 'trail';
 
-      // small colorful glitter (rainbow)
-      const c = rainbow[(Math.random()*rainbow.length)|0];
-      d.style.background = c;
+    d.style.left = x + 'px';
+    d.style.top  = y + 'px';
+    d.style.transform =
+      `rotate(${angle}deg) translateX(-6px)`;
 
-      d.style.left = (x + rand(-10,10)) + 'px';
-      d.style.top  = (y + rand(-10,10)) + 'px';
+    d.style.animation = 'rocketFade 900ms linear forwards';
+    document.body.appendChild(d);
+    setTimeout(()=>d.remove(), 900);
+  }
 
-      const s = rand(4.5,8.5);
-      d.style.width  = s + 'px';
-      d.style.height = s + 'px';
+  function flyOnce(){
+    if(flying) return;
+    flying = true;
 
-      d.style.boxShadow =
-        '0 0 10px rgba(255,255,255,.35), ' +
-        '0 0 18px ' + c + ', ' +
-        '0 0 26px rgba(255,255,255,.25)';
+    const vw = innerWidth;
+    const vh = innerHeight;
 
-      const dur = rand(1400,2300);
-      d.style.animation = 'trailFade ' + dur + 'ms ease-out forwards';
-      document.body.appendChild(d);
-      setTimeout(()=>d.remove(), dur + 300);
+    const fromLeft = Math.random() < 0.5;
+    const startX = fromLeft ? -160 : vw + 160;
+    const endX   = fromLeft ? vw + 160 : -160;
+    const y      = Math.random()*(vh*0.55)+vh*0.15;
+    const dur    = Math.random()*3000+6000;
+
+    ghost.style.transition = 'none';
+    ghost.style.opacity = '1';
+    ghost.style.transform = `translate(${startX}px,${y}px)`;
+
+    requestAnimationFrame(()=>{
+      ghost.style.transition = `transform ${dur}ms linear`;
+      ghost.style.transform = `translate(${endX}px,${y}px)`;
+    });
+
+    const start = performance.now();
+
+    function tick(now){
+      const p = Math.min(1,(now-start)/dur);
+      const x = startX + (endX-startX)*p;
+      const angle = fromLeft ? 180 : 0;
+
+      emitTrail(
+        x + (fromLeft ? 80 : 40),
+        y + 70,
+        angle
+      );
+
+      if(p<1) requestAnimationFrame(tick);
+      else{
+        ghost.style.opacity='0';
+        flying=false;
+        scheduleNext();
+      }
     }
 
-    function flyOnce(){
-      if(flying) return;
-      flying = true;
+    requestAnimationFrame(tick);
+  }
+
+  function scheduleNext(){
+    setTimeout(()=>flyOnce(), Math.random()*8000+6000);
+  }
+
+  setTimeout(flyOnce, 2000);
+}
 
       const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
       const vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
