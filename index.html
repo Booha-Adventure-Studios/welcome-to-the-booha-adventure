@@ -104,17 +104,51 @@ body{
 .aLink:hover{ transform: translateY(-1px) scale(1.03); background: rgba(255,255,255,.78); }
 .aLink:active{ transform: translateY(0px) scale(.98); }
 
+/* 🔥 stronger glow for top 3 buttons */
 @keyframes glowPulseA{
-  0%,100%{ box-shadow: 0 6px 14px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.85), 0 0 0 rgba(255,214,120,0); }
-  50%{ box-shadow: 0 10px 22px rgba(0,0,0,.14), inset 0 1px 0 rgba(255,255,255,.85), 0 0 22px rgba(255,214,120,.85); }
+  0%,100%{
+    box-shadow:
+      0 8px 18px rgba(0,0,0,.12),
+      inset 0 1px 0 rgba(255,255,255,.88),
+      0 0 0 rgba(255,214,120,0);
+  }
+  50%{
+    box-shadow:
+      0 14px 30px rgba(0,0,0,.16),
+      inset 0 1px 0 rgba(255,255,255,.9),
+      0 0 34px rgba(255,214,120,.95),
+      0 0 64px rgba(255,214,120,.45);
+  }
 }
 @keyframes glowPulseB{
-  0%,100%{ box-shadow: 0 6px 14px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.85), 0 0 0 rgba(94,230,255,0); }
-  50%{ box-shadow: 0 10px 22px rgba(0,0,0,.14), inset 0 1px 0 rgba(255,255,255,.85), 0 0 22px rgba(94,230,255,.78); }
+  0%,100%{
+    box-shadow:
+      0 8px 18px rgba(0,0,0,.12),
+      inset 0 1px 0 rgba(255,255,255,.88),
+      0 0 0 rgba(94,230,255,0);
+  }
+  50%{
+    box-shadow:
+      0 14px 30px rgba(0,0,0,.16),
+      inset 0 1px 0 rgba(255,255,255,.9),
+      0 0 34px rgba(94,230,255,.92),
+      0 0 64px rgba(94,230,255,.42);
+  }
 }
 @keyframes glowPulseC{
-  0%,100%{ box-shadow: 0 6px 14px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.85), 0 0 0 rgba(255,126,185,0); }
-  50%{ box-shadow: 0 10px 22px rgba(0,0,0,.14), inset 0 1px 0 rgba(255,255,255,.85), 0 0 22px rgba(255,126,185,.72); }
+  0%,100%{
+    box-shadow:
+      0 8px 18px rgba(0,0,0,.12),
+      inset 0 1px 0 rgba(255,255,255,.88),
+      0 0 0 rgba(255,126,185,0);
+  }
+  50%{
+    box-shadow:
+      0 14px 30px rgba(0,0,0,.16),
+      inset 0 1px 0 rgba(255,255,255,.9),
+      0 0 34px rgba(255,126,185,.9),
+      0 0 64px rgba(255,126,185,.42);
+  }
 }
 .aLink.g1{ animation: glowPulseA 3.2s ease-in-out infinite; animation-delay: .0s; }
 .aLink.g2{ animation: glowPulseB 3.2s ease-in-out infinite; animation-delay: 1.05s; }
@@ -192,7 +226,7 @@ body{
   color: #1a1a1a;
 }
 
-/* ===== Accordion (CLEAN: no spark dots) ===== */
+/* ===== Accordion ===== */
 .accordion{
   background: var(--glass);
   border: 1px solid var(--line);
@@ -220,15 +254,16 @@ body{
   overflow:hidden;
 }
 
-/* open header glow + slow breathing pulse */
+/* ✅ stronger open header glow */
 .btn:before{
   content:"";
   position:absolute;
-  inset:-80px;
+  inset:-90px;
   opacity:0;
   background:
-    radial-gradient(260px 190px at 28% 50%, rgba(255,215,120,.60), rgba(255,255,255,0) 72%),
-    radial-gradient(320px 240px at 78% 45%, rgba(255,235,170,.35), rgba(255,255,255,0) 76%);
+    radial-gradient(300px 220px at 26% 52%, rgba(255,215,120,.72), rgba(255,255,255,0) 72%),
+    radial-gradient(360px 260px at 78% 45%, rgba(255,235,170,.45), rgba(255,255,255,0) 76%),
+    radial-gradient(320px 260px at 55% 110%, rgba(160,235,255,.28), rgba(255,255,255,0) 72%);
   filter: blur(1px);
   pointer-events:none;
   transition: opacity .2s ease;
@@ -236,15 +271,17 @@ body{
 
 @keyframes headerBreath{
   0%,100%{ filter: brightness(1); }
-  50%{ filter: brightness(1.07); }
+  50%{ filter: brightness(1.10); }
 }
 
 .item.open .btn{
-  background: rgba(255,255,255,.22);
-  box-shadow: inset 0 0 0 1px rgba(255,215,120,.35);
-  animation: headerBreath 3.8s ease-in-out infinite;
+  background: rgba(255,255,255,.24);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,215,120,.42),
+    0 0 28px rgba(255,215,120,.26);
+  animation: headerBreath 3.6s ease-in-out infinite;
 }
-.item.open .btn:before{ opacity:.92; }
+.item.open .btn:before{ opacity:1; }
 
 .btn .label{
   display:flex;
@@ -279,11 +316,15 @@ body{
   place-items:center;
   flex:0 0 auto;
   box-shadow: 0 10px 22px rgba(0,0,0,.10);
-  transition: transform .16s ease, background .16s ease;
+  transition: transform .16s ease, background .16s ease, box-shadow .16s ease;
   position:relative;
   z-index:1;
 }
-.item.open .chev{ transform: rotate(45deg); background: rgba(255,255,255,.92); }
+.item.open .chev{
+  transform: rotate(45deg);
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 12px 26px rgba(0,0,0,.12), 0 0 20px rgba(255,215,120,.35);
+}
 .chev:before{ content:"+"; font-weight: 1000; font-size: 18px; line-height: 1; }
 
 .panel{ display:none; padding: 0 18px 18px 18px; }
@@ -317,7 +358,7 @@ body{
 }
 .hidden{display:none !important}
 
-/* ===== Footer (bigger) ===== */
+/* ===== Footer ===== */
 .footer{
   margin-top: 18px;
   text-align:center;
@@ -330,14 +371,13 @@ body{
   text-shadow: 0 1px 0 rgba(255,255,255,.60);
 }
 
-/* ===== Booha FX Layer (ghost + trail live together) ===== */
+/* ===== Booha FX Layer (ghost only) ===== */
 .fxLayer{
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 1000;
 }
-
 .ghost{
   position: absolute;
   left: 0;
@@ -349,29 +389,6 @@ body{
   will-change: transform, opacity;
 }
 
-.trail{
-  position: absolute;
-  pointer-events:none;
-  opacity: 1;
-  border-radius: 999px;
-  background: radial-gradient(circle at 30% 50%,
-    rgba(255,255,255,1),
-    rgba(255,215,120,.95),
-    rgba(255,180,80,.55)
-  );
-  box-shadow:
-    0 0 10px rgba(255,215,120,.95),
-    0 0 22px rgba(255,200,120,.65),
-    0 0 34px rgba(255,235,170,.35);
-  filter: blur(.15px);
-  transform-origin: center;
-  will-change: transform, opacity, width, height;
-}
-@keyframes rocketFade{
-  0%   { opacity:1; transform: scale(1.06); }
-  100% { opacity:0; transform: scale(.25); }
-}
-
 @media (prefers-reduced-motion: reduce){
   .aLink{ animation: none !important; }
   .fxLayer{ display:none !important; }
@@ -381,7 +398,7 @@ body{
 
 <body>
 
-<!-- FX overlay (ghost + trail together) -->
+<!-- FX overlay (ghost only) -->
 <div class="fxLayer" id="fxLayer" aria-hidden="true">
   <img class="ghost" id="boohaGhost" src="BoohaYellow.png" alt="" />
 </div>
@@ -431,6 +448,74 @@ body{
           Every week, you move through the maze and reach a checkpoint. When you reach it, two things open at the same time: your weekly study decks and your weekly Booha adventure game decks.
           One prepares your brain. The other lets you use what you prepared. If you engage with both, even a little each day, English stops feeling heavy and starts feeling normal.
           Booha isn’t about rushing or being perfect. It’s about moving forward, one checkpoint at a time.
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ NEW TAB: Homework and Preparation (BEFORE Study Decks) -->
+    <div class="item">
+      <button class="btn" type="button" aria-expanded="false">
+        <div class="label">
+          <div class="t">Homework and Preparation</div>
+          <div class="s">How to study at home so class time becomes speaking time</div>
+        </div>
+        <div class="chev" aria-hidden="true"></div>
+      </button>
+      <div class="panel">
+        <div class="text">
+          <div class="lead">Important:</div>
+          Outside of taking notes, I do not want students to write in class anymore.
+          Writing happens at home so class time can be used for speaking and real communication.
+          <br><br>
+          <div class="lead">Weekly diary rule:</div>
+          Every student should keep a diary.
+          Each week, write the weekly vocabulary in your diary in <b>English and Japanese</b>, and bring it to school for me to check.
+          If you don’t know what to write, use the Boo-riculum’s weekly diary / writing tips.
+          <br><br>
+
+          <div class="lead">Daily study time (easy targets):</div>
+          <b>Preschool (pre-elementary): under 5 minutes</b><br>
+          ・Practice writing their name<br>
+          ・Trace the alphabet<br>
+          ・Listen to the question audio<br><br>
+
+          <b>Grades 1–3: 5–10 minutes</b><br>
+          ・Write the weekly vocabulary (English + Japanese)<br>
+          ・Listen to the Study Deck audio<br>
+          ・Review the sentence cards<br>
+          ・Practice answering 1–2 speaking questions out loud<br>
+          ・If vocabulary is written at home, we can use class time for speaking—not copying<br><br>
+
+          <b>Grades 4–6: 10–12 minutes</b><br>
+          ・Write the weekly vocabulary (English + Japanese)<br>
+          ・Review the sentence and question decks<br>
+          ・Practice saying the weekly answers out loud<br>
+          ・Keep a short diary (3–4 simple sentences per week)<br><br>
+
+          <b>Junior high school: 10–15 minutes</b><br>
+          ・Write the weekly vocabulary (English + Japanese)<br>
+          ・Review the Study Deck (vocab → sentences → questions)<br>
+          ・Say the weekly answers out loud<br>
+          ・Keep a simple weekly English diary (4–5 sentences)<br><br>
+
+          <b>High school: 12–20 minutes</b><br>
+          ・Write weekly vocabulary (English + Japanese)<br>
+          ・Review sentences and questions<br>
+          ・Say answers out loud (fluency over perfection)<br>
+          ・Keep an English diary (5–8 sentences, including opinions)<br>
+          ・Use the Game Deck when possible<br><br>
+
+          <b>Adults:</b> You’re an adult… so don’t pay for English and then do nothing.<br>
+          The goal is to move away from scripts and into real communication.
+          Come prepared. Common habits that block progress include:<br>
+          ・Trying to speak English with Japanese logic<br>
+          ・Wanting “perfect lines” instead of conversations<br>
+          ・Talking <i>at</i> the teacher instead of <i>with</i> the teacher<br>
+          ・Using vague words for everything (enjoy, famous, so-so, busy…)<br>
+          ・Having almost no curiosity about English-speaking culture<br><br>
+
+          Adults improve fastest when they can talk about what they think—not just where they went and what they ate.
+          If preparing is difficult, use the Boo-riculum weekly theme as your topic.
         </div>
       </div>
     </div>
@@ -530,6 +615,75 @@ body{
           毎週、迷路のチェックポイントに着くと、週の学習デッキと週のアドベンチャーゲームデッキが同時に開きます。
           学習デッキが脳を準備して、ゲームがその準備を使わせてくれます。毎日少しでも関われば、英語は重くなくなり、ふつうに感じられるようになります。
           ブーハーは急ぐ世界ではありません。完璧でもありません。チェックポイントを一つずつ進む世界です。
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ NEW TAB JP: 宿題と準備 -->
+    <div class="item">
+      <button class="btn" type="button" aria-expanded="false">
+        <div class="label">
+          <div class="t">宿題と準備</div>
+          <div class="s">家で準備して、授業は「話す時間」にする</div>
+        </div>
+        <div class="chev" aria-hidden="true"></div>
+      </button>
+      <div class="panel">
+        <div class="text">
+          <div class="lead">大事なこと：</div>
+          ノートを取る以外で、授業中に「書く時間」はもうやりません。<br>
+          書くのは家。授業はスピーキングと実際のコミュニケーションの時間にします。
+          <br><br>
+
+          <div class="lead">毎週のダイアリー：</div>
+          全員、ダイアリー（英語日記）を続けてください。<br>
+          その週の単語を <b>英語＋日本語</b> でダイアリーに書いて、学校に持ってきて私がチェックします。<br>
+          何を書けばいいか分からないときは、ブーリキュラムの「日記／ライティングのコツ」を見てください。
+          <br><br>
+
+          <div class="lead">毎日の目安（かんたん）：</div>
+          <b>未就学（幼児）：5分以内</b><br>
+          ・名前を書く練習<br>
+          ・アルファベットをなぞる<br>
+          ・質問音声を聞く<br><br>
+
+          <b>小1〜小3：5〜10分</b><br>
+          ・週の単語を書く（英語＋日本語）<br>
+          ・学習デッキの音声を聞く<br>
+          ・文カードを見直す<br>
+          ・質問を1〜2個、声に出して答える練習<br>
+          ・家で単語を書けば、授業は「書く」ではなく「話す」時間にできます<br><br>
+
+          <b>小4〜小6：10〜12分</b><br>
+          ・週の単語を書く（英語＋日本語）<br>
+          ・文デッキ／質問デッキを復習<br>
+          ・週の答えを声に出す練習<br>
+          ・短い日記（週に3〜4文）<br><br>
+
+          <b>中学生：10〜15分</b><br>
+          ・週の単語を書く（英語＋日本語）<br>
+          ・学習デッキ（単語→文→質問）を復習<br>
+          ・週の答えを声に出す<br>
+          ・英語日記（週に4〜5文）<br><br>
+
+          <b>高校生：12〜20分</b><br>
+          ・週の単語を書く（英語＋日本語）<br>
+          ・文と質問を復習<br>
+          ・答えを声に出す（完璧より流暢さ）<br>
+          ・英語日記（週に5〜8文。意見も入れる）<br>
+          ・可能ならゲームデッキも使う<br><br>
+
+          <b>大人：</b> 大人なのに、英語にお金を払って何もしないのはもったいないです。<br>
+          台本（セリフ）から卒業して、本当の会話に移りましょう。準備して来てください。<br>
+          よくある伸びない原因：<br>
+          ・日本語のロジックのまま英語を話そうとする<br>
+          ・「完璧なセリフ」を求めすぎる<br>
+          ・先生と「会話」ではなく先生に「話しかけるだけ」になる<br>
+          ・便利なあいまい単語だけで済ませる（enjoy / famous / so-so / busy など）<br>
+          ・英語圏の文化への好奇心が少ない<br><br>
+
+          大人は「どこへ行った／何を食べた」だけじゃなく、「何を考えたか」を話せるようになると一気に伸びます。<br>
+          何を準備すればいいか迷うときは、週のテーマ（ブーリキュラム）を話題にしてください。
         </div>
       </div>
     </div>
@@ -677,7 +831,6 @@ body{
       const btn = it.querySelector('.btn');
       if(!btn) return;
       btn.addEventListener('click', ()=>{
-        // always keep one open
         openOnly(root, it);
       });
     });
@@ -690,186 +843,70 @@ body{
   btnJP.addEventListener('click', ()=>setLang('jp'));
   setLang('jp');
 
- // ===== Booha: HORIZONTAL FLY-BY + ATTACHED ROCKET TRAIL (no reacting) =====
-const prefersReduced =
-  window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const fx = document.getElementById('fxLayer');
-const ghost = document.getElementById('boohaGhost');
+  // ===== Booha: HORIZONTAL FLY-BY (ghost only, no trail) =====
+  const prefersReduced =
+    window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fx = document.getElementById('fxLayer');
+  const ghost = document.getElementById('boohaGhost');
 
-if (!prefersReduced && fx && ghost) {
-  // movement state
-  let x = 0, y = 140;
-  let tx = 0;
-  let vx = 0;
+  if (!prefersReduced && fx && ghost) {
+    let x = 0, y = 140;
+    let tx = 0;
+    let vx = 0;
 
-  let lastT = performance.now();
-  let lastEmit = 0;
+    let lastT = performance.now();
+    ghost.style.opacity = '1';
 
-  ghost.style.opacity = '1';
+    const rand = (a, b) => Math.random() * (b - a) + a;
 
-  const rand = (a, b) => Math.random() * (b - a) + a;
-  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+    function newPass() {
+      const vw = innerWidth;
+      const vh = innerHeight;
 
-  // Choose a new horizontal "pass":
-  // start off-screen on one side, target off-screen on the other.
-  // Y only changes between passes (so no up/down during flight).
-  function newPass() {
-    const vw = innerWidth;
-    const vh = innerHeight;
+      const off = 220;
+      const marginTop = 90;
+      const marginBottom = 140;
 
-    const off = 220;              // how far off-screen Booha can go
-    const marginTop = 90;
-    const marginBottom = 140;
+      y = rand(marginTop, Math.max(marginTop + 1, vh - marginBottom));
 
-    // pick a calm lane (only changes between passes)
-    y = rand(marginTop, Math.max(marginTop + 1, vh - marginBottom));
+      const fromLeft = Math.random() < 0.5;
 
-    const fromLeft = Math.random() < 0.5;
+      x = fromLeft ? -off : (vw + off);
+      tx = fromLeft ? (vw + off) : -off;
 
-    // place Booha fully off-screen
-    x = fromLeft ? -off : (vw + off);
-    tx = fromLeft ? (vw + off) : -off;
+      vx = fromLeft ? 10 : -10;
+      ghost.style.transform = `translate(${x}px, ${y}px)`;
+    }
 
-    // reset velocity so it eases into motion cleanly
-    vx = fromLeft ? 10 : -10;
+    newPass();
 
-    ghost.style.transform = `translate(${x}px, ${y}px)`;
-  }
+    function loop(now) {
+      const dt = Math.min(0.05, (now - lastT) / 1000);
+      lastT = now;
 
- function spawnTrail(px, py, angleDeg, speed) {
-  const d = document.createElement('div');
-  d.className = 'trail';
+      const dx = tx - x;
+      const dist = Math.abs(dx) || 0.001;
+      const dir = dx >= 0 ? 1 : -1;
 
-  // speed → taper
-  const sp = clamp(speed, 40, 420);
-  const t = (sp - 40) / (420 - 40); // 0..1
+      // slow, calm speed
+      const desiredSpeed = 70 + Math.min(80, dist * 0.06);
+      const desiredVx = dir * desiredSpeed;
 
-  // base size (longer even when slow)
-  const w = 22 + t * 28;
-  const h = 6 + t * 5;
-  d.style.width  = w + 'px';
-  d.style.height = h + 'px';
+      const k = 2.0;
+      vx += (desiredVx - vx) * k * dt;
 
-  d.style.left = px + 'px';
-  d.style.top  = py + 'px';
+      x += vx * dt;
+      ghost.style.transform = `translate(${x}px, ${y}px)`;
 
-  // ✨ MAGIC MOTION PARAMETERS
-  const drift = rand(-10, 10);          // sideways float
-  const lift  = rand(-8, -18);          // gentle upward rise
-  const curl  = rand(-14, 14);          // slight swirl
-  const fadeDur = 760 + t * 240;         // slower, floatier fade
-
-  // subtle color variation (gold → warm white)
-  const glow = 0.55 + t * 0.45;
-  d.style.boxShadow = `
-    0 0 ${14 + t * 18}px rgba(255,215,120,${glow}),
-    0 0 ${28 + t * 26}px rgba(255,235,180,${0.35 + t * 0.35})
-  `;
-
-  // initial orientation (pointing backward)
-  d.style.transform = `
-    rotate(${angleDeg}deg)
-    translateX(-6px)
-  `;
-
-  // ✨ FLOAT + CURL animation (inline, per-particle)
-  d.animate(
-    [
-      {
-        opacity: 1,
-        transform: `
-          rotate(${angleDeg}deg)
-          translateX(-6px)
-          translate(0px, 0px)
-          scale(1)
-        `
-      },
-      {
-        opacity: 0,
-        transform: `
-          rotate(${angleDeg + curl}deg)
-          translateX(-6px)
-          translate(${drift}px, ${lift}px)
-          scale(0.25)
-        `
+      if ((dir > 0 && x >= tx) || (dir < 0 && x <= tx)) {
+        newPass();
       }
-    ],
-    {
-      duration: fadeDur,
-      easing: 'cubic-bezier(.22,.61,.36,1)',
-      fill: 'forwards'
-    }
-  );
 
-  fx.appendChild(d);
-  setTimeout(() => d.remove(), fadeDur + 80);
-}
-
-
-  // Start with a pass
-  newPass();
-
-  function loop(now) {
-    const dt = Math.min(0.05, (now - lastT) / 1000);
-    lastT = now;
-
-    // horizontal-only steering (no dy)
-    const dx = tx - x;
-    const dist = Math.abs(dx) || 0.001;
-    const dir = dx >= 0 ? 1 : -1;
-
-    // slower speed profile (the actual "ghost speed")
-    const desiredSpeed = 70 + Math.min(80, dist * 0.06); // px/s (slow)
-    const desiredVx = dir * desiredSpeed;
-
-    // smooth ease toward desired velocity
-    const k = 2.0; // responsiveness (lower = smoother)
-    vx += (desiredVx - vx) * k * dt;
-
-    // integrate
-    const prevX = x;
-    x += vx * dt;
-
-    // apply transform
-    ghost.style.transform = `translate(${x}px, ${y}px)`;
-
-    // if Booha reached target (off-screen), start a new pass
-    if ((dir > 0 && x >= tx) || (dir < 0 && x <= tx)) {
-      newPass();
-    }
-
-    // TRAIL: attach to the back of the PNG (direction-aware)
-    const r = ghost.getBoundingClientRect();
-
-    const mdx = x - prevX;
-    const sp = Math.abs(mdx) / Math.max(dt, 0.0001); // px/s
-    const angle = (mdx >= 0) ? 0 : 180;              // right=0, left=180
-
-    // emitter point: behind the ghost depending on direction
-    const emitX = (mdx >= 0)
-      ? (r.left + r.width * 0.12)    // moving right => emit from left/back
-      : (r.left + r.width * 0.88);   // moving left  => emit from right/back
-    const emitY = r.top + r.height * 0.72;
-
-    // emission rate: fewer particles for slower motion (cleaner)
-    const interval = clamp(34 - (sp / 28), 16, 34); // ms
-    if (now - lastEmit > interval) {
-      lastEmit = now;
-
-      spawnTrail(
-        emitX + rand(-6, 6),
-        emitY + rand(-5, 5),
-        angle + 180 + rand(-8, 8),
-        sp
-      );
+      requestAnimationFrame(loop);
     }
 
     requestAnimationFrame(loop);
   }
-
-  requestAnimationFrame(loop);
-}
-
 })();
 </script>
 </body>
