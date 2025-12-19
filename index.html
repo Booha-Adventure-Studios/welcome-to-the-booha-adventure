@@ -431,7 +431,7 @@ body{
 
   <!-- EN ACCORDION -->
   <section class="accordion en hidden" id="accEN" aria-label="Accordion English">
-    <div class="item open">
+    <div class="item">
       <button class="btn" type="button" aria-expanded="true">
         <div class="label">
           <div class="t">Welcome to the Booha Adventure</div>
@@ -622,7 +622,7 @@ If your session ends, just log in again and keep going.
 
   <!-- JP ACCORDION -->
   <section class="accordion jp" id="accJP" aria-label="Accordion Japanese">
-    <div class="item open">
+    <div class="item">
       <button class="btn" type="button" aria-expanded="true">
         <div class="label">
           <div class="t">ブーハー・アドベンチャーへようこそ</div>
@@ -863,32 +863,41 @@ PINは他の人に教えず、大切に管理してください。
     }
   }
 
-  // ===== Accordion: ONLY ONE OPEN, ALWAYS ONE OPEN =====
-  function openOnly(root, itemToOpen){
-    root.querySelectorAll('.item').forEach(it=>{
-      const btn = it.querySelector('.btn');
-      const isTarget = (it === itemToOpen);
-      it.classList.toggle('open', isTarget);
-      if(btn) btn.setAttribute('aria-expanded', isTarget ? 'true' : 'false');
+ // ===== Accordion: CLOSED BY DEFAULT, ONE OPEN AT A TIME =====
+function closeAll(root){
+  root.querySelectorAll('.item').forEach(it=>{
+    it.classList.remove('open');
+    const btn = it.querySelector('.btn');
+    if(btn) btn.setAttribute('aria-expanded','false');
+  });
+}
+
+function bindAccordion(root){
+  const items = Array.from(root.querySelectorAll('.item'));
+  if(!items.length) return;
+
+  // ✅ start fully closed
+  closeAll(root);
+
+  items.forEach(it=>{
+    const btn = it.querySelector('.btn');
+    if(!btn) return;
+
+    btn.addEventListener('click', ()=>{
+      const isOpen = it.classList.contains('open');
+
+      // close all first
+      closeAll(root);
+
+      // open only if it was closed
+      if(!isOpen){
+        it.classList.add('open');
+        btn.setAttribute('aria-expanded','true');
+      }
     });
-  }
+  });
+}
 
-  function bindAccordion(root){
-    const items = Array.from(root.querySelectorAll('.item'));
-    if(!items.length) return;
-
-    // enforce exactly one open on load
-    const alreadyOpen = items.find(it=>it.classList.contains('open')) || items[0];
-    openOnly(root, alreadyOpen);
-
-    items.forEach(it=>{
-      const btn = it.querySelector('.btn');
-      if(!btn) return;
-      btn.addEventListener('click', ()=>{
-        openOnly(root, it);
-      });
-    });
-  }
 
   bindAccordion(accEN);
   bindAccordion(accJP);
