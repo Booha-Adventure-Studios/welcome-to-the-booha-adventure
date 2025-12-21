@@ -367,10 +367,20 @@ body{
   font-size: 16.5px;
   font-weight: 900;
   letter-spacing:.45px;
-  color: rgba(0,0,0,.88);
+
+  /* ✅ white text */
+  color: rgba(255,255,255,.95);
+
   padding: 24px 10px 0;
-  text-shadow: 0 1px 0 rgba(255,255,255,.60);
+
+  /* ✅ dark glow for forest background */
+ text-shadow:
+  0 2px 6px rgba(0,0,0,.55),
+  0 0 14px rgba(0,0,0,.45),
+  0 0 10px rgba(255,215,120,.18);
+
 }
+
 
 /* ===== Booha FX Layer (ghost only) ===== */
 .fxLayer{
