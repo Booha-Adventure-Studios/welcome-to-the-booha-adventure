@@ -27,7 +27,6 @@
 
 *{box-sizing:border-box}
 html,body{height:100%}
-
 body{
   margin:0;
   color:var(--ink);
@@ -39,20 +38,7 @@ body{
   overflow-x:hidden;
 }
 
-/* ✅ Background readability veil (makes repeating forest feel intentional) */
-.bgVeil{
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(900px 560px at 50% 12%, rgba(10,14,28,.10), rgba(10,14,28,.52) 70%),
-    linear-gradient(to bottom, rgba(10,14,28,.34), rgba(10,14,28,.62));
-}
-
 .wrap{
-  position:relative;
-  z-index:2;
   max-width: 980px;
   margin: 18px auto 80px;
   padding: 0 16px;
@@ -60,15 +46,10 @@ body{
 
 /* ===== Top UI ===== */
 .topbar{
-  /* ✅ sticky on long scroll */
-  position: sticky;
-  top: 12px;
-  z-index: 50;
-
   background: var(--glass);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  box-shadow: var(--shadow), 0 0 0 1px rgba(255,255,255,.10);
+  box-shadow: var(--shadow);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   padding: 14px 14px;
@@ -208,7 +189,7 @@ body{
   background: var(--glass2);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  box-shadow: var(--shadow), 0 0 0 1px rgba(255,255,255,.10);
+  box-shadow: var(--shadow);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   padding: 22px 18px;
@@ -251,47 +232,13 @@ body{
   background: var(--glass);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  box-shadow: var(--shadow), 0 0 0 1px rgba(255,255,255,.10);
+  box-shadow: var(--shadow);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   overflow:hidden;
 }
-
-/* ✅ Sparkle dividers between tabs (no HTML changes needed) */
-.item{
-  position: relative;
-}
 .item{ border-top: 1px solid var(--line); }
 .item:first-child{ border-top:none; }
-
-/* replace the plain border feeling with a subtle “checkpoint” shimmer */
-.item + .item{
-  border-top: none;
-}
-.item + .item::before{
-  content:"";
-  display:block;
-  height:1px;
-  margin: 0 18px;
-  background:
-    linear-gradient(to right,
-      transparent,
-      rgba(255,215,120,.55),
-      rgba(160,235,255,.33),
-      rgba(190,120,255,.22),
-      rgba(255,215,120,.55),
-      transparent
-    );
-  box-shadow:
-    0 0 12px rgba(255,215,120,.26),
-    0 0 22px rgba(160,235,255,.14);
-  opacity: .70;
-  animation: sparklePulse 6.5s ease-in-out infinite;
-}
-@keyframes sparklePulse{
-  0%,100%{ opacity:.40; filter: brightness(1); }
-  50%{ opacity:.90; filter: brightness(1.15); }
-}
 
 .btn{
   width:100%;
@@ -427,44 +374,13 @@ body{
   padding: 24px 10px 0;
 
   /* ✅ dark glow for forest background */
-  text-shadow:
-    0 2px 6px rgba(0,0,0,.55),
-    0 0 14px rgba(0,0,0,.45),
-    0 0 10px rgba(255,215,120,.18);
+ text-shadow:
+  0 2px 6px rgba(0,0,0,.55),
+  0 0 14px rgba(0,0,0,.45),
+  0 0 10px rgba(255,215,120,.18);
+
 }
 
-/* ===== Back to Top ===== */
-.backTop{
-  position: fixed;
-  right: 14px;
-  bottom: 14px;
-  z-index: 80;
-  border: 1px solid rgba(255,255,255,.22);
-  background: rgba(255,255,255,.16);
-  color: rgba(255,255,255,.95);
-  font-family:"Cinzel", serif;
-  font-weight: 900;
-  font-size: 12px;
-  letter-spacing: .35px;
-  padding: 10px 12px;
-  border-radius: 999px;
-  cursor: pointer;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow:
-    0 16px 40px rgba(0,0,0,.30),
-    0 0 18px rgba(255,215,120,.22);
-  opacity: 0;
-  transform: translateY(8px);
-  pointer-events: none;
-  transition: opacity .18s ease, transform .18s ease, background .18s ease;
-}
-.backTop.show{
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-.backTop:hover{ background: rgba(255,255,255,.24); }
 
 /* ===== Booha FX Layer (ghost only) ===== */
 .fxLayer{
@@ -487,15 +403,11 @@ body{
 @media (prefers-reduced-motion: reduce){
   .aLink{ animation: none !important; }
   .fxLayer{ display:none !important; }
-  .item + .item::before{ animation:none !important; }
-  .backTop{ display:none !important; }
 }
 </style>
 </head>
 
 <body>
-
-<div class="bgVeil" aria-hidden="true"></div>
 
 <!-- FX overlay (ghost only) -->
 <div class="fxLayer" id="fxLayer" aria-hidden="false">
@@ -925,8 +837,6 @@ PINは他の人に教えず、大切に管理してください。
 
 </div>
 
-<button class="backTop" id="backTop" type="button">↑ TOP</button>
-
 <script>
 (()=>{
   const accEN = document.getElementById('accEN');
@@ -938,19 +848,6 @@ PINは他の人に教えず、大切に管理してください。
   const linkGate  = document.getElementById('linkGate');
   const linkPrices= document.getElementById('linkPrices');
   const linkBooR  = document.getElementById('linkBooR');
-
-  // ===== Back to Top =====
-  const backTop = document.getElementById('backTop');
-  if(backTop){
-    const onScroll = ()=>{
-      backTop.classList.toggle('show', window.scrollY > 420);
-    };
-    window.addEventListener('scroll', onScroll, {passive:true});
-    onScroll();
-    backTop.addEventListener('click', ()=>{
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  }
 
   function setLang(lang){
     const isJP = (lang === 'jp');
@@ -981,40 +878,41 @@ PINは他の人に教えず、大切に管理してください。
     }
   }
 
-  // ===== Accordion: CLOSED BY DEFAULT, ONE OPEN AT A TIME =====
-  function closeAll(root){
-    root.querySelectorAll('.item').forEach(it=>{
-      it.classList.remove('open');
-      const btn = it.querySelector('.btn');
-      if(btn) btn.setAttribute('aria-expanded','false');
+ // ===== Accordion: CLOSED BY DEFAULT, ONE OPEN AT A TIME =====
+function closeAll(root){
+  root.querySelectorAll('.item').forEach(it=>{
+    it.classList.remove('open');
+    const btn = it.querySelector('.btn');
+    if(btn) btn.setAttribute('aria-expanded','false');
+  });
+}
+
+function bindAccordion(root){
+  const items = Array.from(root.querySelectorAll('.item'));
+  if(!items.length) return;
+
+  // ✅ start fully closed
+  closeAll(root);
+
+  items.forEach(it=>{
+    const btn = it.querySelector('.btn');
+    if(!btn) return;
+
+    btn.addEventListener('click', ()=>{
+      const isOpen = it.classList.contains('open');
+
+      // close all first
+      closeAll(root);
+
+      // open only if it was closed
+      if(!isOpen){
+        it.classList.add('open');
+        btn.setAttribute('aria-expanded','true');
+      }
     });
-  }
+  });
+}
 
-  function bindAccordion(root){
-    const items = Array.from(root.querySelectorAll('.item'));
-    if(!items.length) return;
-
-    // start fully closed
-    closeAll(root);
-
-    items.forEach(it=>{
-      const btn = it.querySelector('.btn');
-      if(!btn) return;
-
-      btn.addEventListener('click', ()=>{
-        const isOpen = it.classList.contains('open');
-
-        // close all first
-        closeAll(root);
-
-        // open only if it was closed
-        if(!isOpen){
-          it.classList.add('open');
-          btn.setAttribute('aria-expanded','true');
-        }
-      });
-    });
-  }
 
   bindAccordion(accEN);
   bindAccordion(accJP);
