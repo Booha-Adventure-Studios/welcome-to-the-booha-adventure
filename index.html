@@ -39,7 +39,7 @@ body{
   overflow-x:hidden;
 }
 
-/* ===== Background readability veil ===== */
+/* ✅ Background readability veil (makes repeating forest feel intentional) */
 .bgVeil{
   position: fixed;
   inset: 0;
@@ -47,7 +47,7 @@ body{
   pointer-events: none;
   background:
     radial-gradient(900px 560px at 50% 12%, rgba(10,14,28,.10), rgba(10,14,28,.52) 70%),
-    linear-gradient(to bottom, rgba(10,14,28,.38), rgba(10,14,28,.62));
+    linear-gradient(to bottom, rgba(10,14,28,.34), rgba(10,14,28,.62));
 }
 
 .wrap{
@@ -60,9 +60,11 @@ body{
 
 /* ===== Top UI ===== */
 .topbar{
+  /* ✅ sticky on long scroll */
   position: sticky;
   top: 12px;
-  z-index: 20;
+  z-index: 50;
+
   background: var(--glass);
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -72,8 +74,133 @@ body{
   padding: 14px 14px;
 }
 
-/* (topbar inner styles unchanged) */
-/* ... your existing topbar styles remain exactly the same ... */
+.topStack{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+}
+
+.links{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+}
+
+.aLink{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:7px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,.12);
+  background: linear-gradient(135deg, rgba(255,245,210,.85), rgba(255,255,255,.75));
+  color:#1a1a1a;
+  text-decoration:none;
+  font-weight:900;
+  font-size: 12.5px;
+  letter-spacing:.2px;
+  white-space:nowrap;
+  box-shadow: 0 6px 14px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.85);
+  position:relative;
+  overflow:hidden;
+  transform: translateZ(0);
+}
+.aLink:before{
+  content:"";
+  position:absolute;
+  inset:-60px;
+  background:
+    radial-gradient(120px 90px at 30% 40%, rgba(255,214,120,.75), rgba(255,255,255,0) 70%),
+    radial-gradient(140px 110px at 70% 60%, rgba(160,235,255,.65), rgba(255,255,255,0) 72%),
+    radial-gradient(120px 100px at 50% 80%, rgba(255,170,210,.55), rgba(255,255,255,0) 72%);
+  opacity:.45;
+  filter: blur(.6px);
+  pointer-events:none;
+}
+.aLink:hover{ transform: translateY(-1px) scale(1.03); background: rgba(255,255,255,.78); }
+.aLink:active{ transform: translateY(0px) scale(.98); }
+
+/* 🔥 stronger glow for top 3 buttons */
+@keyframes glowPulseA{
+  0%,100%{
+    box-shadow:
+      0 8px 18px rgba(0,0,0,.12),
+      inset 0 1px 0 rgba(255,255,255,.88),
+      0 0 0 rgba(255,214,120,0);
+  }
+  50%{
+    box-shadow:
+      0 14px 30px rgba(0,0,0,.16),
+      inset 0 1px 0 rgba(255,255,255,.9),
+      0 0 34px rgba(255,214,120,.95),
+      0 0 64px rgba(255,214,120,.45);
+  }
+}
+@keyframes glowPulseB{
+  0%,100%{
+    box-shadow:
+      0 8px 18px rgba(0,0,0,.12),
+      inset 0 1px 0 rgba(255,255,255,.88),
+      0 0 0 rgba(94,230,255,0);
+  }
+  50%{
+    box-shadow:
+      0 14px 30px rgba(0,0,0,.16),
+      inset 0 1px 0 rgba(255,255,255,.9),
+      0 0 34px rgba(94,230,255,.92),
+      0 0 64px rgba(94,230,255,.42);
+  }
+}
+@keyframes glowPulseC{
+  0%,100%{
+    box-shadow:
+      0 8px 18px rgba(0,0,0,.12),
+      inset 0 1px 0 rgba(255,255,255,.88),
+      0 0 0 rgba(255,126,185,0);
+  }
+  50%{
+    box-shadow:
+      0 14px 30px rgba(0,0,0,.16),
+      inset 0 1px 0 rgba(255,255,255,.9),
+      0 0 34px rgba(255,126,185,.9),
+      0 0 64px rgba(255,126,185,.42);
+  }
+}
+.aLink.g1{ animation: glowPulseA 3.2s ease-in-out infinite; animation-delay: .0s; }
+.aLink.g2{ animation: glowPulseB 3.2s ease-in-out infinite; animation-delay: 1.05s; }
+.aLink.g3{ animation: glowPulseC 3.2s ease-in-out infinite; animation-delay: 2.1s; }
+
+.langToggle{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+}
+.langBtn{
+  border:1px solid var(--line);
+  background: rgba(255,255,255,.62);
+  color: var(--ink);
+  font-weight:900;
+  padding:10px 12px;
+  border-radius: 999px;
+  cursor:pointer;
+  box-shadow: 0 10px 24px rgba(0,0,0,.10);
+  transition: transform .12s ease, background .12s ease, box-shadow .12s ease;
+}
+.langBtn:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.78);
+  box-shadow: 0 16px 30px rgba(0,0,0,.14);
+}
+.langBtn.active{
+  background: rgba(255,255,255,.92);
+  border-color: rgba(0,0,0,.22);
+}
 
 /* ===== Hero ===== */
 .hero{
@@ -89,6 +216,35 @@ body{
   overflow:hidden;
   text-align:center;
 }
+.hero:before{
+  content:"";
+  position:absolute; inset:-40px;
+  background:
+    radial-gradient(260px 190px at 18% 35%, rgba(255,220,120,.55), rgba(255,255,255,0) 65%),
+    radial-gradient(280px 210px at 82% 30%, rgba(160,235,255,.40), rgba(255,255,255,0) 70%),
+    radial-gradient(260px 210px at 60% 85%, rgba(255,170,210,.35), rgba(255,255,255,0) 70%);
+  filter: blur(1px);
+  opacity:.55;
+  pointer-events:none;
+}
+.heroInner{position:relative}
+.hero h1{
+  margin:0 0 10px;
+  font-family:"Cinzel", serif;
+  font-weight: 900;
+  letter-spacing:.6px;
+  font-size: clamp(24px, 3.4vw, 38px);
+}
+.jpTitle{
+  font-family:"Noto Sans JP", system-ui, sans-serif !important;
+  letter-spacing:.2px !important;
+}
+.hero p{
+  margin:0;
+  font-size: 14.5px;
+  font-weight: 900;
+  color: #1a1a1a;
+}
 
 /* ===== Accordion ===== */
 .accordion{
@@ -101,46 +257,160 @@ body{
   overflow:hidden;
 }
 
-/* ===== Booha Sparkle Divider ===== */
-.sparkleDivider{
-  height: 18px;
-  margin: 0 18px;
+/* ✅ Sparkle dividers between tabs (no HTML changes needed) */
+.item{
   position: relative;
 }
-.sparkleDivider::before{
+.item{ border-top: 1px solid var(--line); }
+.item:first-child{ border-top:none; }
+
+/* replace the plain border feeling with a subtle “checkpoint” shimmer */
+.item + .item{
+  border-top: none;
+}
+.item + .item::before{
   content:"";
-  position:absolute;
-  left:0; right:0; top:50%;
+  display:block;
   height:1px;
+  margin: 0 18px;
   background:
     linear-gradient(to right,
       transparent,
       rgba(255,215,120,.55),
-      rgba(160,235,255,.35),
-      rgba(255,170,210,.30),
+      rgba(160,235,255,.33),
+      rgba(190,120,255,.22),
       rgba(255,215,120,.55),
       transparent
     );
   box-shadow:
-    0 0 10px rgba(255,215,120,.35),
-    0 0 22px rgba(160,235,255,.18);
-  animation: sparklePulse 6s ease-in-out infinite;
+    0 0 12px rgba(255,215,120,.26),
+    0 0 22px rgba(160,235,255,.14);
+  opacity: .70;
+  animation: sparklePulse 6.5s ease-in-out infinite;
 }
-
 @keyframes sparklePulse{
-  0%,100%{ opacity:.45; }
-  50%{ opacity:.85; }
+  0%,100%{ opacity:.40; filter: brightness(1); }
+  50%{ opacity:.90; filter: brightness(1.15); }
 }
 
-/* divider placement */
-.item + .item::before{
+.btn{
+  width:100%;
+  text-align:left;
+  padding: 16px 18px;
+  background: transparent;
+  border:0;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  position:relative;
+  overflow:hidden;
+}
+
+/* ✅ stronger open header glow */
+.btn:before{
   content:"";
-  display:block;
-  height:18px;
+  position:absolute;
+  inset:-90px;
+  opacity:0;
+  background:
+    radial-gradient(300px 220px at 26% 52%, rgba(255,215,120,.72), rgba(255,255,255,0) 72%),
+    radial-gradient(360px 260px at 78% 45%, rgba(255,235,170,.45), rgba(255,255,255,0) 76%),
+    radial-gradient(320px 260px at 55% 110%, rgba(160,235,255,.28), rgba(255,255,255,0) 72%);
+  filter: blur(1px);
+  pointer-events:none;
+  transition: opacity .2s ease;
 }
-.item + .item .sparkleDivider{
-  display:block;
+
+@keyframes headerBreath{
+  0%,100%{ filter: brightness(1); }
+  50%{ filter: brightness(1.10); }
 }
+
+.item.open .btn{
+  background: rgba(255,255,255,.24);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,215,120,.42),
+    0 0 28px rgba(255,215,120,.26);
+  animation: headerBreath 3.6s ease-in-out infinite;
+}
+.item.open .btn:before{ opacity:1; }
+
+.btn .label{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  position:relative;
+  z-index:1;
+}
+.btn .label .t{
+  font-family:"Cinzel", serif;
+  font-weight: 900;
+  letter-spacing:.4px;
+  font-size: 16px;
+}
+.jp .btn .label .t{
+  font-family:"Noto Sans JP", system-ui, sans-serif;
+  letter-spacing:.2px;
+}
+.btn .label .s{
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.chev{
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.60);
+  display:grid;
+  place-items:center;
+  flex:0 0 auto;
+  box-shadow: 0 10px 22px rgba(0,0,0,.10);
+  transition: transform .16s ease, background .16s ease, box-shadow .16s ease;
+  position:relative;
+  z-index:1;
+}
+.item.open .chev{
+  transform: rotate(45deg);
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 12px 26px rgba(0,0,0,.12), 0 0 20px rgba(255,215,120,.35);
+}
+.chev:before{ content:"+"; font-weight: 1000; font-size: 18px; line-height: 1; }
+
+.panel{ display:none; padding: 0 18px 18px 18px; }
+.item.open .panel{ display:block; }
+
+.text{
+  background: rgba(255,255,255,.66);
+  border: 1px solid rgba(0,0,0,.10);
+  border-radius: var(--radius2);
+  padding: 16px 16px;
+  line-height: 1.86;
+  font-weight: 750;
+  color: #121212;
+  box-shadow: 0 12px 26px rgba(0,0,0,.10);
+}
+.text .lead{
+  font-weight: 950;
+  font-family:"Cinzel", serif;
+  letter-spacing:.2px;
+}
+.jp .text .lead{
+  font-family:"Noto Sans JP", system-ui, sans-serif;
+  letter-spacing:.2px;
+}
+.smallNote{
+  margin-top:12px;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #222;
+  opacity:.9;
+}
+.hidden{display:none !important}
 
 /* ===== Footer ===== */
 .footer{
@@ -150,8 +420,13 @@ body{
   font-size: 16.5px;
   font-weight: 900;
   letter-spacing:.45px;
+
+  /* ✅ white text */
   color: rgba(255,255,255,.95);
+
   padding: 24px 10px 0;
+
+  /* ✅ dark glow for forest background */
   text-shadow:
     0 2px 6px rgba(0,0,0,.55),
     0 0 14px rgba(0,0,0,.45),
@@ -163,9 +438,9 @@ body{
   position: fixed;
   right: 14px;
   bottom: 14px;
-  z-index: 30;
+  z-index: 80;
   border: 1px solid rgba(255,255,255,.22);
-  background: rgba(255,255,255,.18);
+  background: rgba(255,255,255,.16);
   color: rgba(255,255,255,.95);
   font-family:"Cinzel", serif;
   font-weight: 900;
@@ -189,11 +464,31 @@ body{
   transform: translateY(0);
   pointer-events: auto;
 }
-.backTop:hover{ background: rgba(255,255,255,.26); }
+.backTop:hover{ background: rgba(255,255,255,.24); }
 
-/* motion safety */
+/* ===== Booha FX Layer (ghost only) ===== */
+.fxLayer{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+}
+.ghost{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 120px;
+  height: auto;
+  opacity: 0;
+  filter: drop-shadow(0 14px 18px rgba(0,0,0,.25));
+  will-change: transform, opacity;
+}
+
 @media (prefers-reduced-motion: reduce){
-  .sparkleDivider::before{ animation:none; }
+  .aLink{ animation: none !important; }
+  .fxLayer{ display:none !important; }
+  .item + .item::before{ animation:none !important; }
+  .backTop{ display:none !important; }
 }
 </style>
 </head>
@@ -202,14 +497,12 @@ body{
 
 <div class="bgVeil" aria-hidden="true"></div>
 
-<!-- FX overlay -->
+<!-- FX overlay (ghost only) -->
 <div class="fxLayer" id="fxLayer" aria-hidden="false">
   <img class="ghost" id="boohaGhost" src="DeluxeBoo.png" alt="" />
 </div>
 
 <div class="wrap">
-
-<!-- 🔥 YOUR ORIGINAL HTML CONTENT IS UNCHANGED BELOW 🔥 -->
 
   <div class="topbar" role="navigation" aria-label="Booha links and language toggle">
     <div class="topStack">
@@ -628,14 +921,26 @@ PINは他の人に教えず、大切に管理してください。
     </div>
   </section>
 
-<div class="footer" id="footerText">Bryan's English School</div>
+  <div class="footer" id="footerText">Bryan's English School</div>
+
 </div>
 
 <button class="backTop" id="backTop" type="button">↑ TOP</button>
 
 <script>
 (()=>{
-const backTop = document.getElementById('backTop');
+  const accEN = document.getElementById('accEN');
+  const accJP = document.getElementById('accJP');
+  const btnEN = document.getElementById('btnEN');
+  const btnJP = document.getElementById('btnJP');
+  const heroTitle = document.getElementById('heroTitle');
+  const heroLine  = document.getElementById('heroLine');
+  const linkGate  = document.getElementById('linkGate');
+  const linkPrices= document.getElementById('linkPrices');
+  const linkBooR  = document.getElementById('linkBooR');
+
+  // ===== Back to Top =====
+  const backTop = document.getElementById('backTop');
   if(backTop){
     const onScroll = ()=>{
       backTop.classList.toggle('show', window.scrollY > 420);
@@ -646,17 +951,6 @@ const backTop = document.getElementById('backTop');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
-})();
-  
-  const accEN = document.getElementById('accEN');
-  const accJP = document.getElementById('accJP');
-  const btnEN = document.getElementById('btnEN');
-  const btnJP = document.getElementById('btnJP');
-  const heroTitle = document.getElementById('heroTitle');
-  const heroLine  = document.getElementById('heroLine');
-  const linkGate  = document.getElementById('linkGate');
-  const linkPrices= document.getElementById('linkPrices');
-  const linkBooR  = document.getElementById('linkBooR');
 
   function setLang(lang){
     const isJP = (lang === 'jp');
@@ -687,41 +981,40 @@ const backTop = document.getElementById('backTop');
     }
   }
 
- // ===== Accordion: CLOSED BY DEFAULT, ONE OPEN AT A TIME =====
-function closeAll(root){
-  root.querySelectorAll('.item').forEach(it=>{
-    it.classList.remove('open');
-    const btn = it.querySelector('.btn');
-    if(btn) btn.setAttribute('aria-expanded','false');
-  });
-}
-
-function bindAccordion(root){
-  const items = Array.from(root.querySelectorAll('.item'));
-  if(!items.length) return;
-
-  // ✅ start fully closed
-  closeAll(root);
-
-  items.forEach(it=>{
-    const btn = it.querySelector('.btn');
-    if(!btn) return;
-
-    btn.addEventListener('click', ()=>{
-      const isOpen = it.classList.contains('open');
-
-      // close all first
-      closeAll(root);
-
-      // open only if it was closed
-      if(!isOpen){
-        it.classList.add('open');
-        btn.setAttribute('aria-expanded','true');
-      }
+  // ===== Accordion: CLOSED BY DEFAULT, ONE OPEN AT A TIME =====
+  function closeAll(root){
+    root.querySelectorAll('.item').forEach(it=>{
+      it.classList.remove('open');
+      const btn = it.querySelector('.btn');
+      if(btn) btn.setAttribute('aria-expanded','false');
     });
-  });
-}
+  }
 
+  function bindAccordion(root){
+    const items = Array.from(root.querySelectorAll('.item'));
+    if(!items.length) return;
+
+    // start fully closed
+    closeAll(root);
+
+    items.forEach(it=>{
+      const btn = it.querySelector('.btn');
+      if(!btn) return;
+
+      btn.addEventListener('click', ()=>{
+        const isOpen = it.classList.contains('open');
+
+        // close all first
+        closeAll(root);
+
+        // open only if it was closed
+        if(!isOpen){
+          it.classList.add('open');
+          btn.setAttribute('aria-expanded','true');
+        }
+      });
+    });
+  }
 
   bindAccordion(accEN);
   bindAccordion(accJP);
