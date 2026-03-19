@@ -543,48 +543,29 @@ body::before {
   ];
 
   function spawnDust(x, y, speed) {
-    /* Dense fairy cloud — more particles, smaller, floaty */
-    const count = Math.min(Math.floor(speed * 0.7) + 4, 22);
+    /* Gentle fairy trail — sparse, soft, floaty */
+    const count = Math.min(Math.floor(speed * 0.18) + 1, 5);
     for (let i = 0; i < count; i++) {
       const angle  = Math.random() * Math.PI * 2;
-      const spd    = 0.15 + Math.random() * 1.4;
-      const isCore = Math.random() < 0.25;
+      const spd    = 0.1 + Math.random() * 0.8;
+      const isCore = Math.random() < 0.2;
       particles.push({
         x, y,
         vx: Math.cos(angle) * spd,
         vy: Math.sin(angle) * spd,
-        floatVy: -(0.08 + Math.random() * 0.18),   /* drift upward */
+        floatVy: -(0.06 + Math.random() * 0.12),
         r: isCore
-          ? 1.0 + Math.random() * 1.6              /* core: tiny bright star */
-          : 0.5 + Math.random() * 2.0,             /* dust: very small */
-        alpha:  isCore ? 1.0 : 0.55 + Math.random() * 0.45,
+          ? 0.8 + Math.random() * 1.2
+          : 0.4 + Math.random() * 1.4,
+        alpha:  isCore ? 0.85 : 0.4 + Math.random() * 0.35,
         decay:  isCore
-          ? 0.010 + Math.random() * 0.010           /* core lingers */
-          : 0.016 + Math.random() * 0.020,          /* dust fades quicker */
+          ? 0.018 + Math.random() * 0.014
+          : 0.024 + Math.random() * 0.020,
         color: isCore ? '#ffffff' : FAIRY[Math.floor(Math.random() * FAIRY.length)],
         isCore,
         twinkle:      Math.random() * Math.PI * 2,
-        twinkleSpeed: 0.05 + Math.random() * 0.15,
+        twinkleSpeed: 0.05 + Math.random() * 0.12,
       });
-    }
-    /* Burst of bigger glitter on fast movement */
-    if (speed > 25) {
-      for (let i = 0; i < 5; i++) {
-        const angle = Math.random() * Math.PI * 2;
-        particles.push({
-          x, y,
-          vx: Math.cos(angle) * (1.2 + Math.random() * 2.5),
-          vy: Math.sin(angle) * (1.2 + Math.random() * 2.5),
-          floatVy: -(0.12 + Math.random() * 0.14),
-          r: 1.8 + Math.random() * 2.2,
-          alpha: 0.95,
-          decay: 0.008 + Math.random() * 0.010,
-          color: FAIRY[Math.floor(Math.random() * FAIRY.length)],
-          isCore: false,
-          twinkle:      Math.random() * Math.PI * 2,
-          twinkleSpeed: 0.04 + Math.random() * 0.08,
-        });
-      }
     }
   }
 
@@ -640,7 +621,7 @@ body::before {
     ambientT -= dt;
     if (ambientT <= 0) {
       spawnAmbient(gx, gy);
-      ambientT = 0.045 + Math.random() * 0.065;   /* frequent ambient motes */
+      ambientT = 0.10 + Math.random() * 0.12;   /* less frequent ambient motes */
     }
 
     /* Render particles */
