@@ -1,5 +1,5 @@
 
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="utf-8" />
@@ -151,9 +151,9 @@ body::before {
 .item.open .panel { max-height: 9999px; }
 .panel-inner { padding: 0 22px 24px; }
 .panel-body { background: var(--card); border: 1px solid var(--border); border-radius: var(--r2); padding: 22px; color: #ccc9e0; line-height: 1.85; font-size: 14.5px; }
-.jp .panel-body { font-family: 'Noto Sans JP', sans-serif; font-size: 14px; line-height: 2; }
-.panel-body .lead { font-family: 'Spectral', Georgia, serif; font-weight: 700; font-size: 16px; color: var(--ivory); display: block; margin-bottom: 6px; }
-.jp .panel-body .lead { font-family: 'Noto Sans JP', sans-serif; font-size: 15px; }
+.jp .panel-body { font-family: 'Noto Sans JP', sans-serif; font-size: 14px; line-height: 2.1; }
+.panel-body .lead { font-family: 'Spectral', Georgia, serif; font-weight: 700; font-size: 16px; color: var(--ivory); display: block; margin-bottom: 8px; margin-top: 4px; }
+.jp .panel-body .lead { font-family: 'Noto Sans JP', sans-serif; font-size: 15px; font-weight: 700; }
 .panel-body strong { color: var(--ivory); font-weight: 600; }
 .panel-body ul { padding-left: 20px; margin: 8px 0; }
 .panel-body li { margin-bottom: 10px; }
@@ -171,6 +171,7 @@ body::before {
 .note strong { color: var(--teal); }
 .note.dark { background: rgba(184,168,255,.06); border-color: rgba(184,168,255,.18); }
 .note.dark strong { color: var(--lavender); }
+.jp .note { font-family: 'Noto Sans JP', sans-serif; font-size: 13px; line-height: 1.9; }
 .level-block { margin-bottom: 16px; padding: 14px 16px; background: rgba(255,255,255,.03); border-radius: 10px; border-left: 3px solid transparent; }
 .level-block:nth-child(1) { border-color: var(--teal); }
 .level-block:nth-child(2) { border-color: var(--lavender); }
@@ -181,16 +182,12 @@ body::before {
 .level-title { font-weight: 600; color: var(--ivory); font-size: 13.5px; margin-bottom: 6px; }
 .level-block ul { margin: 0; padding-left: 16px; color: var(--muted); font-size: 13px; }
 .level-block li { margin-bottom: 3px; }
+.jp .level-block { font-family: 'Noto Sans JP', sans-serif; }
+.jp .level-title { font-size: 13px; }
+.jp .level-block li { font-size: 12.5px; }
 
 .footer { margin-top: 40px; text-align: center; color: var(--muted); font-size: 13px; letter-spacing: .5px; }
 .footer span { color: var(--teal); }
-
-#fxLayer { position: fixed; inset: 0; pointer-events: none; z-index: 9999; }
-#boohaGhost {
-  position: absolute; width: 46px; height: auto; opacity: 0; will-change: transform;
-  filter: drop-shadow(0 0 7px rgba(180,220,255,.7)) drop-shadow(0 0 20px rgba(184,168,255,.45));
-}
-#trailCanvas { position: fixed; inset: 0; pointer-events: none; z-index: 9998; width: 100%; height: 100%; }
 
 @media (max-width: 600px) {
   .hero { padding: 28px 20px 24px; }
@@ -201,16 +198,10 @@ body::before {
 }
 @media (prefers-reduced-motion: reduce) {
   .aLink { animation: none !important; }
-  #fxLayer, #trailCanvas { display: none !important; }
 }
 </style>
 </head>
 <body>
-
-<canvas id="trailCanvas"></canvas>
-<div id="fxLayer" aria-hidden="true">
-  <img id="boohaGhost" src="DeluxeBoo.png" alt="" />
-</div>
 
 <div class="wrap">
 
@@ -260,12 +251,12 @@ body::before {
         <br><br>
         Play the games. Unlock the forest. Find the doorways. Discover what opens.
         <br><br>
-        Tests appear on scheduled days. When a test day arrives, you'll access it here. Stars earned each week are yours to keep. Progress inside Karasuki resets every Monday — because every week is a different world. Nothing happens the same way twice.
+        Tests appear on scheduled days. Stars earned each week are yours to keep. Progress inside Karasuki resets every Monday because every week is a different world. Nothing happens the same way twice.
+
+        <br><br><span class="lead">Why I built it</span>
+        I watched students study English, forget it, study it again, and slowly start to think the problem was them. It wasn't. The problem was that English never stayed in one place long enough to feel familiar. Booha gives English a place to live and a reason to come back.
         <br><br>
-        <span class="lead">Why I built it</span>
-        I watched students study English, forget it, study it again, and slowly start to think the problem was them. It wasn't. The problem was that English never stayed in one place long enough to feel familiar. Booha gives English a place to live — and a reason to come back.
-        <br><br>
-        There are three curricula: <strong>Pre-Boo</strong>, <strong>Boo-riculum</strong>, and <strong>Boo-Continuum</strong>. If you're familiar with Eiken, think of it like this:
+        There are three curricula: <strong>Pre-Boo</strong>, <strong>Boo-riculum</strong>, and <strong>Boo-Continuum</strong>. If you know Eiken, think of it like this:
         <br><br>
         <table class="pin-table">
           <tr><th>Curriculum</th><th>Eiken Level</th></tr>
@@ -274,9 +265,9 @@ body::before {
           <tr><td>Boo-Continuum</td><td>Grade 1 and above</td></tr>
         </table>
         <br>
-        Most students use Boo-riculum. It loops and builds practical conversational English without locking you into a fixed level — because your level is based on how much you use the language.
+        Most students use Boo-riculum. It loops and builds practical conversational English without locking you into a fixed level. Your level is based on how much you use the language.
         <br><br>
-        Inside the Adventure you'll find three weeks of study decks: this week, last week, and next week. Each week includes 15 vocabulary words, 15 sentences, and 15 questions, all with full audio, along with a hands-free stream for listening and repeating. You can also talk to Uhibon. I'll let you find that yourself.
+        Inside the Adventure you'll find three weeks of study decks: this week, last week, and next week. Each week includes 15 vocabulary words, 15 sentences, and 15 questions, all with full audio, along with a hands-free stream for listening and repeating. You can also talk to Uhibon. Find that yourself.
         <br><br>
         This world is based on my novel Karasuki. The story goes deeper than the game. The game goes places the novel doesn't.
         <br><br>
@@ -322,10 +313,10 @@ body::before {
         <br><br>
         <div class="level-block"><div class="level-title">Preschool — under 5 minutes</div><ul><li>Practice writing their name</li><li>Trace the alphabet</li><li>Listen to the question audio</li></ul></div>
         <div class="level-block"><div class="level-title">Grades 1–3 — 5 to 10 minutes</div><ul><li>Write the weekly vocabulary (English + Japanese)</li><li>Listen to the Study Deck audio</li><li>Review the sentence cards</li><li>Practice answering 1 to 2 speaking questions out loud</li></ul></div>
-        <div class="level-block"><div class="level-title">Grades 4–6 — 10 to 12 minutes</div><ul><li>Write the weekly vocabulary (English + Japanese)</li><li>Review the sentence and question decks</li><li>Practice saying the weekly answers out loud</li><li>Keep a short diary (3 to 4 simple sentences per week)</li></ul></div>
-        <div class="level-block"><div class="level-title">Junior High — 10 to 15 minutes</div><ul><li>Write the weekly vocabulary (English + Japanese)</li><li>Review the Study Deck (vocabulary, sentences, questions)</li><li>Say the weekly answers out loud</li><li>Keep a simple weekly English diary (4 to 5 sentences)</li></ul></div>
+        <div class="level-block"><div class="level-title">Grades 4–6 — 10 to 12 minutes</div><ul><li>Write the weekly vocabulary (English + Japanese)</li><li>Review the sentence and question decks</li><li>Practice saying the weekly answers out loud</li><li>Keep a short diary (3 to 4 sentences per week)</li></ul></div>
+        <div class="level-block"><div class="level-title">Junior High — 10 to 15 minutes</div><ul><li>Write the weekly vocabulary (English + Japanese)</li><li>Review the Study Deck (vocabulary, sentences, questions)</li><li>Say the weekly answers out loud</li><li>Keep a weekly English diary (4 to 5 sentences)</li></ul></div>
         <div class="level-block"><div class="level-title">High School — 12 to 20 minutes</div><ul><li>Write weekly vocabulary (English + Japanese)</li><li>Review sentences and questions</li><li>Say answers out loud. Fluency over perfection.</li><li>Keep an English diary (5 to 8 sentences, including opinions)</li><li>Use the Game Deck when possible</li></ul></div>
-        <div class="level-block"><div class="level-title">Adults</div><ul><li>Come prepared. The goal is to move away from scripts and into real communication.</li><li>Common habits that block progress: speaking English with Japanese logic, wanting perfect lines instead of conversations, using vague words for everything (enjoy, famous, so-so, busy), having almost no curiosity about English-speaking culture.</li><li>Adults improve fastest when they talk about what they think — not just where they went and what they ate.</li></ul></div>
+        <div class="level-block"><div class="level-title">Adults</div><ul><li>Come prepared. The goal is to move away from scripts and into real communication.</li><li>Common habits that slow progress: speaking English with Japanese logic, wanting perfect lines instead of real conversations, filling every answer with vague words like enjoy, famous, so-so, or busy, and having little curiosity about English-speaking culture.</li><li>Adults improve fastest when they talk about what they actually think, not just where they went and what they ate.</li></ul></div>
       </div></div></div>
     </div>
 
@@ -347,12 +338,12 @@ body::before {
         <br><br>
         The hands-free stream is where everything connects. You listen, repeat, and move with the language without stopping. This is where rhythm, confidence, and flow build.
         <br><br>
-        These decks are not something you finish once. You come back to them until the English feels familiar.
+        These decks are not something you finish once. Come back to them until the English feels familiar.
 
         <br><br><span class="lead">Game Decks</span>
         Each week includes 9 games built around the same English you studied.
         <br><br>
-        The games are not separate from the study. They are where you use it. When the study decks feel familiar, the games feel smooth. When the study decks are skipped, the games feel hard. The system is honest like that.
+        The games are not separate from the study. They are where you use it. When the study decks feel familiar, the games feel smooth. When you skip the decks, the games feel hard. The system is honest like that.
         <br><br>
         As you complete games, more things begin to appear and unlock across the Adventure. The more you play, the more the world responds.
 
@@ -375,20 +366,20 @@ body::before {
       </button>
       <div class="panel"><div class="panel-inner"><div class="panel-body">
 
-        <span class="lead">ここは世界です。英語は、その入口です。</span>
+        <span class="lead">ここは世界です。英語が、その入口になります。</span>
 
-        迷路の先へ進まなくても、毎週のコンテンツはすべてここで練習できます。スタディデッキ、音声、ゲーム — 授業に必要なものはここに揃っています。でも迷路の中に、毎週のゲームがあります。そして迷路の先には、また別の何かがあります。
+        迷路の先へ行かなくても、毎週のコンテンツはすべてここで練習できます。スタディデッキも、音声も、ゲームも、授業に必要なものは全部ここにあります。でも迷路の中に、毎週のゲームがあります。そして迷路の向こうには、もっと別の何かがあります。
         <br><br>
-        進めば進むほど、世界は荒々しく、暗くなっていきます。カラスキは扉です。一度入ると、迷うかもしれません。それは警告ではありません。それがこの世界の意味です。
+        進むほど、世界は深く、暗くなっていきます。カラスキは扉です。一度入ったら、迷うかもしれない。それは怖がらせたいわけじゃない。それがここの面白さです。
         <br><br>
-        ゲームをプレイして。森を解放して。扉を見つけて。何が開くか、自分で確かめてください。
+        ゲームをやってみてください。森を解放してみてください。扉を見つけて、何が開くか確かめてください。
         <br><br>
-        テストは決められた日に現れます。テスト日が来たら、ここからアクセスします。毎週獲得したスターは残ります。カラスキの中での進捗は毎週月曜日にリセットされます — 毎週、世界が変わるからです。同じ週は二度とありません。
+        テストは決まった日に現れます。毎週稼いだスターはそのまま残ります。カラスキの中の進捗は毎週月曜日にリセットされます。毎週、世界が変わるからです。同じ週は二度とありません。
+
+        <br><br><span class="lead">なぜ作ったのか</span>
+        英語を勉強しては忘れて、また勉強しては忘れて、だんだん「自分がダメなんだ」と思いはじめる生徒を何度も見てきました。でも、問題は生徒じゃなかった。英語が、なじむ前に消えてしまうのが問題でした。ブーハーは、英語にちゃんと居場所を作ります。そして、また戻ってきたくなる理由も。
         <br><br>
-        <span class="lead">なぜ作ったのか</span>
-        英語を勉強しては忘れ、また勉強しては忘れ、だんだん「自分がダメなんじゃないか」と思っていく生徒たちを何度も見てきました。でも、問題は生徒ではありませんでした。英語が「慣れる前に消えてしまう」ことが問題でした。ブーハーは、英語に居場所を作ります。そして、戻ってくる理由も。
-        <br><br>
-        カリキュラムは3つあります：<strong>Pre-Boo</strong>、<strong>Boo-riculum</strong>、<strong>Boo-Continuum</strong>。英検で考えると：
+        カリキュラムは3つあります。<strong>Pre-Boo</strong>、<strong>Boo-riculum</strong>、<strong>Boo-Continuum</strong>。英検で考えると、こんな感じです：
         <br><br>
         <table class="pin-table">
           <tr><th>カリキュラム</th><th>英検レベルの目安</th></tr>
@@ -397,15 +388,15 @@ body::before {
           <tr><td>Boo-Continuum</td><td>1級以上</td></tr>
         </table>
         <br>
-        多くの生徒はBoo-riculumを使っています。ループ構造で、レベルに縛られず会話英語を積み上げていきます。力は、どれだけ使ったかで伸びます。
+        ほとんどの生徒はBoo-riculumを使っています。同じ英語を形を変えながら何度も使うループ構造で、気づいたら会話力がついている仕組みです。レベルで区切っていません。どれだけ使ったかが、そのまま力になります。
         <br><br>
-        アドベンチャーの中には「今週・先週・来週」の3週分のスタディデッキがあります。毎週15の単語、15の文、15の質問が用意されており、すべて音声付きです。ハンズフリーで聞いてリピートするストリームもあります。Uhibonと話すこともできます。それは自分で見つけてください。
+        アドベンチャーには「今週・先週・来週」の3週分のスタディデッキがあります。毎週15の単語、15の文、15の質問が用意されていて、すべて音声付きです。ハンズフリーで聞いてリピートするストリームもあります。Uhibonと話せる場所もあります。それは自分で見つけてください。
         <br><br>
-        この世界は、私の小説「カラスキ」をもとにしています。物語はゲームより深く続いています。ゲームは、小説が行かない場所へ行きます。
+        この世界は、私の小説「カラスキ」をもとにしています。物語はゲームより深いところまで続いています。ゲームは、小説が行かない場所へ行きます。
         <br><br>
-        このシステムは完全にプライベートです。AIとは接続していません。データは端末の外に記録されません。私でさえあなたの進捗を見ることはできません。データはあなたのものです。
+        このシステムは完全にプライベートです。AIとはつながっていません。データは端末の外には出ません。私でさえ、あなたの進捗を見ることはできません。データはあなたのものです。
 
-        <div class="note dark"><strong>ログインについて：</strong><br>PINは同時に1台の端末でのみ使えます。すでにログイン中に別の端末から同じPINでログインすると、現在のセッションは自動的に終了します。PINは大切に管理してください。ログアウトしてしまった場合は、再度ログインして続けてください。</div>
+        <div class="note dark"><strong>ログインについて：</strong><br>PINは同時に1台の端末でしか使えません。すでにログインしているときに別の端末から同じPINでログインすると、今のセッションは自動的に終わります。PINは人に教えないでください。もしログアウトしてしまったら、またログインし直せば続けられます。</div>
 
       </div></div></div>
     </div>
@@ -420,7 +411,7 @@ body::before {
         <div class="acc-icon" aria-hidden="true">+</div>
       </button>
       <div class="panel"><div class="panel-inner"><div class="panel-body">
-        ブーハー・アドベンチャーは私の教室のために作ったシステムで、レッスンの一部として提供しています。他のスクールの方もご利用いただけます。2週間の無料トライアルをご用意しています。
+        ブーハー・アドベンチャーは私の教室のために作ったシステムで、レッスンに含まれています。他のスクールの方もご利用いただけます。2週間の無料トライアルをご用意しています。
         <table class="pin-table">
           <tr><th>PIN数</th><th class="price">料金</th></tr>
           <tr><td>1 PIN</td><td class="price">¥500</td></tr>
@@ -441,14 +432,14 @@ body::before {
         <div class="acc-icon" aria-hidden="true">+</div>
       </button>
       <div class="panel"><div class="panel-inner"><div class="panel-body">
-        授業中に書く時間はやりません。書くのは家です。授業はスピーキングと実際のコミュニケーションの時間にします。全員、ダイアリーを続けてください。その週の単語を<strong>英語＋日本語</strong>でダイアリーに書いて、学校に持ってきてください。
+        授業中に書く時間はとりません。書くのは家でやってきてください。授業はスピーキングとコミュニケーションの時間にします。全員、ダイアリーを続けてください。その週の単語を<strong>英語と日本語</strong>で書いて、学校に持ってきてください。
         <br><br>
-        <div class="level-block"><div class="level-title">未就学（幼児）— 5分以内</div><ul><li>名前を書く練習</li><li>アルファベットをなぞる</li><li>質問音声を聞く</li></ul></div>
-        <div class="level-block"><div class="level-title">小1〜小3 — 5〜10分</div><ul><li>週の単語を書く（英語＋日本語）</li><li>学習デッキの音声を聞く</li><li>文カードを見直す</li><li>質問を1〜2個、声に出して答える練習をする</li></ul></div>
-        <div class="level-block"><div class="level-title">小4〜小6 — 10〜12分</div><ul><li>週の単語を書く（英語＋日本語）</li><li>文デッキ・質問デッキを復習する</li><li>週の答えを声に出す練習をする</li><li>短い日記（週に3〜4文）を書く</li></ul></div>
-        <div class="level-block"><div class="level-title">中学生 — 10〜15分</div><ul><li>週の単語を書く（英語＋日本語）</li><li>学習デッキ（単語・文・質問）を復習する</li><li>週の答えを声に出す</li><li>英語日記（週に4〜5文）を書く</li></ul></div>
-        <div class="level-block"><div class="level-title">高校生 — 12〜20分</div><ul><li>週の単語を書く（英語＋日本語）</li><li>文と質問を復習する</li><li>答えを声に出す。完璧より流暢さ。</li><li>英語日記（週に5〜8文。意見も含める）を書く</li><li>可能ならゲームデッキも使う</li></ul></div>
-        <div class="level-block"><div class="level-title">大人</div><ul><li>準備して来てください。台本から卒業して、本当の会話に移りましょう。</li><li>よくある伸びない原因：日本語のロジックのまま英語を話す。完璧なセリフを求めすぎる。あいまい単語だけで済ませる（enjoy、famous、so-so、busyなど）。英語圏の文化への好奇心がほぼない。</li><li>「どこへ行った・何を食べた」だけでなく、「何を考えたか」を話せるようになると、一気に伸びます。</li></ul></div>
+        <div class="level-block"><div class="level-title">未就学（幼児）— 5分以内</div><ul><li>名前を書く練習をする</li><li>アルファベットをなぞる</li><li>質問の音声を聞く</li></ul></div>
+        <div class="level-block"><div class="level-title">小1〜小3 — 5〜10分</div><ul><li>週の単語を書く（英語と日本語）</li><li>スタディデッキの音声を聞く</li><li>文カードを見直す</li><li>質問を1〜2個、声に出して答える練習をする</li></ul></div>
+        <div class="level-block"><div class="level-title">小4〜小6 — 10〜12分</div><ul><li>週の単語を書く（英語と日本語）</li><li>文デッキと質問デッキを確認する</li><li>週の答えを声に出して練習する</li><li>短い日記を書く（週に3〜4文）</li></ul></div>
+        <div class="level-block"><div class="level-title">中学生 — 10〜15分</div><ul><li>週の単語を書く（英語と日本語）</li><li>スタディデッキ（単語・文・質問）を復習する</li><li>週の答えを声に出す</li><li>英語日記を書く（週に4〜5文）</li></ul></div>
+        <div class="level-block"><div class="level-title">高校生 — 12〜20分</div><ul><li>週の単語を書く（英語と日本語）</li><li>文と質問を復習する</li><li>答えを声に出す。完璧じゃなくていい、流暢さを意識して。</li><li>英語日記を書く（週に5〜8文。自分の意見も入れてみて）</li><li>できればゲームデッキも使う</li></ul></div>
+        <div class="level-block"><div class="level-title">大人</div><ul><li>準備して来てください。台本を読むのではなく、本当に話す練習をしましょう。</li><li>伸びにくい人によくあるパターン：日本語の発想のまま英語を話す。完璧な言い方を探しすぎる。「楽しかった」「有名な」「まあまあ」「忙しい」ばかりで答える。英語圏の文化にあまり興味がない。</li><li>「どこへ行った・何を食べた」より「何を感じた・どう思った」を話せるようになると、ぐっと伸びます。</li></ul></div>
       </div></div></div>
     </div>
 
@@ -456,28 +447,28 @@ body::before {
       <button class="acc-btn" type="button" aria-expanded="false">
         <div class="acc-label">
           <div class="acc-num">04 — 学習</div>
-          <div class="acc-title">スタディデッキ・ゲームデッキ</div>
-          <div class="acc-sub">土台と実践の場。</div>
+          <div class="acc-title">スタディデッキとゲームデッキ</div>
+          <div class="acc-sub">土台と、それを使う場所。</div>
         </div>
         <div class="acc-icon" aria-hidden="true">+</div>
       </button>
       <div class="panel"><div class="panel-inner"><div class="panel-body">
 
         <span class="lead">スタディデッキ</span>
-        スタディデッキはブーハーの土台です。ここが弱いと、他がうまく回りません。毎週、単語カード・文カード・質問カードに加えて、ハンズフリーで聞いてリピートできるストリームが入っています。すべて音声付きです。
+        スタディデッキはブーハーの土台です。ここをしっかりやっておかないと、他がうまくいきません。毎週、単語カード・文カード・質問カードが入っていて、すべて音声付きです。ハンズフリーで聞いてリピートできるストリームもあります。
         <br><br>
-        単語カードは、その週の中心となる単語を音と文字の両方で素早く認識できるようにします。文カードは、その単語が実際の英語の中でどう使われるかを見せます。質問カードは、「分かる」ではなく「答える」ための準備です。
+        単語カードは、その週のキーワードを音と文字の両方で素早く覚えるためのもの。文カードは、その単語が実際の英語の中でどう使われるかを見せてくれます。質問カードは、「分かる」じゃなくて「答える」ための準備です。ゲームで急に詰まらないように、先に英語を体に入れておきます。
         <br><br>
-        ストリームはすべてをつなぐ場所です。止めずに聞いて、繰り返して、英語の流れに乗る。ここでリズムと自信がついていきます。
+        ストリームはその全部をつなぐ場所です。止めずに聞いて、繰り返して、英語のリズムに乗っていく。ここで自信とスピードがついてきます。
         <br><br>
-        1回で終わらせるものではありません。英語が「見たことある・聞いたことある」状態になるまで、何度も開いてください。
+        1回やったら終わり、じゃありません。「見たことある」「聞いたことある」になるまで、何度でも開いてください。
 
         <br><br><span class="lead">ゲームデッキ</span>
         毎週、同じ英語を使った9つのゲームが用意されています。
         <br><br>
-        ゲームは学習とは別ではありません。ここで英語を使います。スタディデッキに慣れているとスムーズに進み、飛ばすと急に難しく感じます。ブーハーはそこが正直です。
+        ゲームは勉強とは別のものじゃありません。ゲームが、使う場所です。スタディデッキに慣れていると、ゲームはスムーズに進みます。飛ばすと、急に難しく感じます。ブーハーはそういうところが正直です。
         <br><br>
-        ゲームを進めるほど、アドベンチャーの中でいろいろなものが現れ、解放されていきます。進めば進むほど、世界が反応します。
+        ゲームを進めるほど、アドベンチャーの中でいろんなものが現れたり、解放されたりしていきます。やればやるほど、世界が動きます。
 
       </div></div></div>
     </div>
@@ -549,165 +540,6 @@ body::before {
   btnEN.addEventListener('click', () => setLang('en'));
   btnJP.addEventListener('click', () => setLang('jp'));
   setLang('jp');
-
-  const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-  const ghost   = document.getElementById('boohaGhost');
-  const canvas  = document.getElementById('trailCanvas');
-  if (reduced || !ghost || !canvas) return;
-
-  const ctx = canvas.getContext('2d');
-  function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
-  resize();
-  window.addEventListener('resize', resize);
-
-  let gx = -80, gy = 200, vx = 0, vy = 0;
-  let targetX = 200, targetY = 200, wanderTimer = 0;
-  const GHOST_W = 46;
-
-  function newTarget() {
-    const pad = 90;
-    targetX = pad + Math.random() * (innerWidth  - pad * 2);
-    targetY = pad + Math.random() * (innerHeight * 0.75 - pad);
-    wanderTimer = 1.8 + Math.random() * 3.0;
-  }
-  newTarget();
-  ghost.style.opacity = '1';
-  ghost.style.width   = GHOST_W + 'px';
-
-  const particles = [];
-
-  const FAIRY = [
-    '#ffffff', '#e8f8ff', '#d0eeff',
-    '#c8aaff', '#dfc8ff',
-    '#a0f0e4', '#b8fff2',
-    '#ffe8b0', '#fff0c8',
-    '#ffb8e8', '#ffd0f0',
-    '#b8e4ff',
-  ];
-
-  function spawnDust(x, y, speed) {
-    const count = Math.min(Math.floor(speed * 0.18) + 1, 5);
-    for (let i = 0; i < count; i++) {
-      const angle  = Math.random() * Math.PI * 2;
-      const spd    = 0.1 + Math.random() * 0.8;
-      const isCore = Math.random() < 0.2;
-      particles.push({
-        x, y,
-        vx: Math.cos(angle) * spd,
-        vy: Math.sin(angle) * spd,
-        floatVy: -(0.06 + Math.random() * 0.12),
-        r: isCore ? 0.8 + Math.random() * 1.2 : 0.4 + Math.random() * 1.4,
-        alpha:  isCore ? 0.85 : 0.4 + Math.random() * 0.35,
-        decay:  isCore ? 0.018 + Math.random() * 0.014 : 0.024 + Math.random() * 0.020,
-        color: isCore ? '#ffffff' : FAIRY[Math.floor(Math.random() * FAIRY.length)],
-        isCore,
-        twinkle:      Math.random() * Math.PI * 2,
-        twinkleSpeed: 0.05 + Math.random() * 0.12,
-      });
-    }
-  }
-
-  let ambientT = 0;
-  function spawnAmbient(x, y) {
-    const a = Math.random() * Math.PI * 2;
-    const r = 10 + Math.random() * 20;
-    particles.push({
-      x: x + Math.cos(a) * r,
-      y: y + Math.sin(a) * r,
-      vx: (Math.random() - 0.5) * 0.35,
-      vy: 0,
-      floatVy: -(0.12 + Math.random() * 0.2),
-      r: 0.5 + Math.random() * 1.1,
-      alpha: 0.4 + Math.random() * 0.45,
-      decay: 0.010 + Math.random() * 0.013,
-      color: FAIRY[Math.floor(Math.random() * FAIRY.length)],
-      isCore: false,
-      twinkle:      Math.random() * Math.PI * 2,
-      twinkleSpeed: 0.04 + Math.random() * 0.10,
-    });
-  }
-
-  let last = performance.now();
-
-  function loop(now) {
-    const dt = Math.min(0.05, (now - last) / 1000);
-    last = now;
-
-    wanderTimer -= dt;
-    if (wanderTimer <= 0) newTarget();
-
-    const dx    = targetX - gx;
-    const dy    = targetY - gy;
-    const dist  = Math.hypot(dx, dy) || 0.001;
-    const spd   = Math.min(62, dist * 0.68);
-    const tvx   = (dx / dist) * spd;
-    const tvy   = (dy / dist) * spd;
-    const k     = 2.0;
-    vx += (tvx - vx) * k * dt;
-    vy += (tvy - vy) * k * dt;
-    gx += vx * dt;
-    gy += vy * dt;
-
-    const speed  = Math.hypot(vx, vy);
-    const scaleX = vx >= 0 ? 1 : -1;
-    ghost.style.transform = `translate(${gx - GHOST_W/2}px, ${gy - GHOST_W/2}px) scaleX(${scaleX})`;
-
-    if (speed > 2.5) spawnDust(gx, gy, speed);
-
-    ambientT -= dt;
-    if (ambientT <= 0) {
-      spawnAmbient(gx, gy);
-      ambientT = 0.10 + Math.random() * 0.12;
-    }
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    for (let i = particles.length - 1; i >= 0; i--) {
-      const p   = particles[i];
-      p.x      += p.vx;
-      p.y      += p.vy + p.floatVy;
-      p.alpha  -= p.decay;
-      p.twinkle+= p.twinkleSpeed;
-      p.vx     *= 0.965;
-      p.vy     *= 0.965;
-
-      if (p.alpha <= 0) { particles.splice(i, 1); continue; }
-
-      const shimmer = p.alpha * (0.62 + 0.38 * Math.sin(p.twinkle));
-
-      ctx.save();
-      ctx.globalAlpha = shimmer;
-      ctx.fillStyle   = p.color;
-      ctx.shadowColor = p.color;
-
-      if (p.r > 1.6 || p.isCore) {
-        ctx.shadowBlur = p.isCore ? 12 : 8;
-        ctx.translate(p.x, p.y);
-        ctx.rotate(p.twinkle * 0.4);
-        ctx.beginPath();
-        const s = p.r, inner = s * 0.28;
-        for (let j = 0; j < 8; j++) {
-          const a   = (j / 8) * Math.PI * 2;
-          const len = j % 2 === 0 ? s : inner;
-          j === 0
-            ? ctx.moveTo(Math.cos(a) * len, Math.sin(a) * len)
-            : ctx.lineTo(Math.cos(a) * len, Math.sin(a) * len);
-        }
-        ctx.closePath();
-        ctx.fill();
-      } else {
-        ctx.shadowBlur = 6;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      ctx.restore();
-    }
-
-    requestAnimationFrame(loop);
-  }
-
-  requestAnimationFrame(loop);
 })();
 </script>
 </body>
